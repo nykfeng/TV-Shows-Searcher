@@ -6,7 +6,7 @@ const searchBtn = document.querySelector(".search-bar-btn");
 const searchResultEl = document.querySelector(".result-area");
 let currentInputVal;
 let notClicked = true;
-
+let tvSearchResults = [];
 inputEl.addEventListener("input", async function (e) {
   let currentInput = e.target.value.toLowerCase();
   currentInputVal = currentInput;
@@ -15,7 +15,7 @@ inputEl.addEventListener("input", async function (e) {
 
 const renderSearchResult = async function (currentInput) {
   if (currentInput) {
-    const tvSearchResults = await fetch.TVShows(currentInput);
+    tvSearchResults = await fetch.TVShows(currentInput);
     resultListEl.classList.remove("hidden");
 
     if (notClicked) {
@@ -57,13 +57,14 @@ searchBtn.addEventListener("click", function () {
 // Click the result from the dropdown
 resultListEl.addEventListener("click", function (e) {
   const clickedResultText = e.target.textContent;
-  inputEl.value = "";
-
-  renderSearchResult(clickedResultText);
   notClicked = false;
+  renderSearchResult(clickedResultText);
   removeSearchResultList();
+  inputEl.value = "";
 });
 
+// -------------------------------------------------------------------------
+// Remore dropdown results
 const removeSearchResultList = function () {
   while (resultListEl.firstChild) {
     resultListEl.removeChild(resultListEl.firstChild);
@@ -71,11 +72,14 @@ const removeSearchResultList = function () {
   resultListEl.classList.add("hidden");
 };
 
+// -------------------------------------------------------------------------
+// Remove the search result (main area)
 const removeSearchResultContent = function () {
   while (searchResultEl.firstChild) {
     searchResultEl.removeChild(searchResultEl.firstChild);
   }
 };
+// -------------------------------------------------------------------------
 
 // Render the search result content
 const renderResults = function (tvSearchResults) {
@@ -95,10 +99,20 @@ const renderResults = function (tvSearchResults) {
             <div class="tv-show-content">
                  <div class="tv-show-title">${tvName}</div>
             <div class="tv-show-summary">${summaryText}</div>
-                <a class="learn-more-btn" href="${tv.show?.officialSite}">Learn More</a>
+                <button class="learn-more-btn data-${tv.show?.externals?.imdb}" >Learn More</button>
             </div>
         `;
     tvCard.insertAdjacentHTML("beforeend", html);
+
+    const learnMoreBtn = tvCard.querySelector(".learn-more-btn");
+    learnMoreBtn.addEventListener("click", function () {
+      const name = tv.show?.name;
+      console.log(`TV name is ${name}`);
+      removeSearchResultContent();
+      const moreDetailsEl = renderMoreDetailsElements(tv);
+      searchResultEl.insertAdjacentHTML("beforeend", moreDetailsEl);
+    });
+
     return tvCard;
   });
   return tvShowCardResultEl;
@@ -109,3 +123,58 @@ document.querySelector("body").addEventListener("click", function (e) {
     removeSearchResultList();
   }
 });
+
+const renderMoreDetailsElements = function (tv) {
+  const imdbLink = `https://www.imdb.com/title/${tv.show?.externals?.imdb}`;
+  const tvrageLink = `https://www.imdb.com/title/${tv.show?.externals?.tvrage}`;
+  const thetvdbLink = `https://www.imdb.com/title/${tv.show?.externals?.thetvdb}`;
+  const html = `
+    <div class="more-details">
+            <div class="poster">
+                <img class="poster-image" src="${tv.show?.image?.original}"
+                    alt="${tv.show?.name} poster">
+            </div>
+            <div class="tv-show-info">
+                <div class="info-title">🎞TV Show Information</div>
+                <div class="name">Name: <span>${tv.show?.name}</span></div>
+                <div class="runtime">Runtime: <span>${
+                  tv.show?.runtime || "Unknown"
+                }</span></div>
+                <div class="premiered">Premiered on: <span>${
+                  tv.show?.premiered || "Unknown"
+                }</span></div>
+                <div class="ended">Ended on: <span>${
+                  tv.show?.ended || "Still running"
+                }</span></div>
+                <div class="official-site">Official site: <a class="external-link-official" href="${
+                  tv.show?.officialSite
+                }"><i class="fas fa-external-link-alt"></i></a></div>
+                <div class="ratings">Rating: <span>${
+                  tv.show?.rating?.average || "No"
+                }</span>⭐</div>
+            </div>
+            <div class="tv-show-details">
+                <div class="details-title">🎬Details</div>
+                <div class="country">Country: <span>${
+                  tv.show?.network?.country?.name || "Unknown"
+                }</span></div>
+                <div class="language">Language: <span>${
+                  tv.show?.language || "Unknown"
+                }</span></div>
+                <div class="network">Network: <span>${
+                  tv.show?.network?.name || "Unknown"
+                }</span></div>
+                <div class="summary">Summary: <span class=summary-text>${
+                  tv.show?.summary || ""
+                }</span></div>
+            </div>
+            <div class="external-links">
+                <div>Check is out at: </div>
+                <div class="imdb-links"><a class="external-link external-link-imdb" href="${imdbLink}"></a></div>
+                <div class="tvrage"><a class="external-link external-link-tvrage" href="${tvrageLink}"></a></div>
+                <div class="thetvdb"><a class="external-link external-link-thetvdb" href="${thetvdbLink}"></a></div>
+            </div>
+        </div>
+    `;
+  return html;
+};

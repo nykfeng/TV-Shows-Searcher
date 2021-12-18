@@ -33,7 +33,7 @@ header {
 }
 
 .title {
-  font-size: 6rem;
+  font-size: 6em;
   display: inline-block;
 }
 
@@ -177,7 +177,7 @@ Main result content section
   padding: 1.5rem;
 
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.85));
-  transform: translateY(75%);
+  transform: translateY(78%);
   transition: transform 500ms ease;
   height: 100%;
   display: flex;
@@ -218,10 +218,95 @@ Main result content section
   margin-top: 1rem;
   padding: 1.5rem;
   width: 12ch;
+  font-size: 2.3rem;
+  cursor: pointer;
 }
 
 .learn-more-btn:hover,
 .learn-more-btn:focus {
   background-color: var(--primary-gray-color);
   color: var(--primary-dark-color);
+}
+
+/* ========================================================================
+Main more details content section
+========================================================================*/
+.more-details {
+  background-color: var(--primary-gray-color);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto 1fr;
+  font-size: 3rem;
+  column-gap: 3rem;
+  row-gap: 1rem;
+}
+
+.more-details span {
+  font-family: "Roboto", sans-serif;
+}
+
+.poster {
+  grid-row: 1/-1;
+}
+
+.poster-image {
+  max-height: 70vh;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.8);
+}
+
+.summary-text {
+  font-size: 1.5rem;
+}
+
+.info-title,
+.details-title {
+  background-image: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--main-color)
+  );
+  color: #fff;
+  letter-spacing: 0.3rem;
+}
+.external-links {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  align-items: center;
+}
+.external-link {
+  display: inline-block;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  width: 3.5em;
+  height: 1.5em;
+  background-size: cover;
+}
+
+.external-link-official {
+  color: var(--main-color);
+  padding: 0 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  align-items: baseline;
+  align-content: center;
+  border: 1px solid var(--primary-dark-color);
+}
+
+.external-link-official:hover {
+  color: var(--green-price-color);
+}
+
+.external-link-imdb {
+  background-image: url(/images/IMDB.png);
+}
+
+.external-link-tvrage {
+  border: 1px solid var(--primary-dark-color);
+  background-image: url(/images/tvrage.png);
+}
+
+.external-link-thetvdb {
+  background-image: url(/images/thetvdb.png);
+  background-color: var(--primary-dark-color);
 }
