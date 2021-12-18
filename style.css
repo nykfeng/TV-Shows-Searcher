@@ -135,12 +135,12 @@ Main result content section
 ========================================================================*/
 .result-area {
   padding: 2rem;
-  /* display: flex;
-  flex-wrap: wrap; */
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(4, 1fr); */
   gap: 1rem;
 }
 
@@ -152,6 +152,7 @@ Main result content section
   background-size: cover;
   padding-top: 25rem;
   max-width: 35ch;
+  min-width: 20ch;
   margin: 2rem 1rem;
   border-radius: 1.5rem;
   overflow: hidden;
