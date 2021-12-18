@@ -47,6 +47,10 @@ header {
   max-height: 8vh;
 }
 
+/* ========================================================================
+Search bar and dropdown content section
+========================================================================*/
+
 .search-area {
   padding: 2rem;
   background-color: #f7f7f7;
@@ -174,6 +178,10 @@ Main result content section
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.85));
   transform: translateY(75%);
   transition: transform 500ms ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .tv-show-title {
@@ -208,6 +216,7 @@ Main result content section
   background-color: var(--main-color);
   margin-top: 1rem;
   padding: 1.5rem;
+  width: 12ch;
 }
 
 .learn-more-btn:hover,

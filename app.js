@@ -5,6 +5,7 @@ const resultListEl = document.querySelector(".result-list");
 const searchBtn = document.querySelector(".search-bar-btn");
 const searchResultEl = document.querySelector(".result-area");
 let currentInputVal;
+let notClicked = true;
 
 inputEl.addEventListener("input", async function (e) {
   let currentInput = e.target.value.toLowerCase();
@@ -17,9 +18,10 @@ const renderSearchResult = async function (currentInput) {
     const tvSearchResults = await fetch.TVShows(currentInput);
     resultListEl.classList.remove("hidden");
 
-    if (tvSearchResults) {
-      const resultList = tvSearchResults.map((tv) => {
-        return `<li class="dropdown-list">
+    if (notClicked) {
+      if (tvSearchResults) {
+        const resultList = tvSearchResults.map((tv) => {
+          return `<li class="dropdown-list">
             <img class="dropdown-tv-image" src="${
               tv.show.image?.medium || "./images/no-image-35x50.png"
             }" alt="${tv.show.name}" width="35px" height="50px">
@@ -28,17 +30,19 @@ const renderSearchResult = async function (currentInput) {
               tv.show.rating.average || "No"
             }⭐</span>
             </li>`;
-      });
-      resultListEl.innerHTML = resultList.join("");
-      removeSearchResultContent();
-      const cardResult = renderResults(tvSearchResults);
-      console.log(renderResults(cardResult));
-      cardResult.map((result) => {
-        searchResultEl.append(result);
-      });
+        });
+        resultListEl.innerHTML = resultList.join("");
+      } else {
+        removeSearchResultList();
+      }
     }
-  } else {
-    removeSearchResultList();
+    removeSearchResultContent();
+    const cardResult = renderResults(tvSearchResults);
+
+    cardResult.map((result) => {
+      searchResultEl.append(result);
+    });
+    notClicked = true;
   }
 };
 
@@ -52,10 +56,12 @@ searchBtn.addEventListener("click", function () {
 
 // Click the result from the dropdown
 resultListEl.addEventListener("click", function (e) {
-  const resultClicked = e.target.textContent;
+  const clickedResultText = e.target.textContent;
+  inputEl.value = "";
+
+  renderSearchResult(clickedResultText);
+  notClicked = false;
   removeSearchResultList();
-  console.log(`input value is ${resultClicked}`);
-  renderSearchResult(resultClicked);
 });
 
 const removeSearchResultList = function () {
@@ -71,14 +77,15 @@ const removeSearchResultContent = function () {
   }
 };
 
+// Render the search result content
 const renderResults = function (tvSearchResults) {
   const tvShowCardResultEl = tvSearchResults.map((tv) => {
     const tvCard = document.createElement("div");
     tvCard.classList.add("tv-show-card");
     tvCard.style.backgroundImage = `url('${tv.show?.image?.medium || ""}')`;
     const tvName =
-      tv.show?.name.length >= 25
-        ? tv.show?.name.substring(0, 22) + "..."
+      tv.show?.name.length >= 24
+        ? tv.show?.name.substring(0, 21) + "..."
         : tv.show?.name;
     const summaryText =
       tv.show?.summary?.length >= 140
