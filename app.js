@@ -5,12 +5,17 @@ const resultListEl = document.querySelector(".result-list");
 const searchBtn = document.querySelector(".search-bar-btn");
 const searchResultEl = document.querySelector(".result-area");
 let currentInputVal;
-let notClicked = true;
+
 let tvSearchResults = [];
+
+// -------------------------------------------------------------------------
+// Listen for input change from the search box
 inputEl.addEventListener("input", async function (e) {
   let currentInput = e.target.value.toLowerCase();
   currentInputVal = currentInput;
-  renderSearchResult(currentInput);
+  if (currentInputVal !== "") {
+    renderSearchResult(currentInputVal);
+  }
 });
 
 const renderSearchResult = async function (currentInput) {
@@ -18,10 +23,10 @@ const renderSearchResult = async function (currentInput) {
     tvSearchResults = await fetch.TVShows(currentInput);
     resultListEl.classList.remove("hidden");
 
-    if (notClicked) {
-      if (tvSearchResults) {
-        const resultList = tvSearchResults.map((tv) => {
-          return `<li class="dropdown-list">
+    // Render the dropdown list result
+    if (tvSearchResults) {
+      const resultList = tvSearchResults.map((tv) => {
+        return `<li class="dropdown-list">
             <img class="dropdown-tv-image" src="${
               tv.show.image?.medium || "./images/no-image-35x50.png"
             }" alt="${tv.show.name}" width="35px" height="50px">
@@ -30,41 +35,45 @@ const renderSearchResult = async function (currentInput) {
               tv.show.rating.average || "No"
             }⭐</span>
             </li>`;
-        });
-        resultListEl.innerHTML = resultList.join("");
-      } else {
-        removeSearchResultList();
-      }
+      });
+      resultListEl.innerHTML = resultList.join("");
+    } else {
+      // If the array of search result is empty
+      removeSearchResultList();
     }
-    removeSearchResultContent();
-    const cardResult = renderResults(tvSearchResults);
 
-    cardResult.map((result) => {
-      searchResultEl.append(result);
+    // Render the search result in card form in the main result area
+    renderResultOnPage(createResultHtml(tvSearchResults));
+
+    // Click the result from the dropdown list
+    resultListEl.addEventListener("click", function (e) {
+      const currentListEl = e.target.closest(".dropdown-list");
+      const clickedTVShowName =
+        currentListEl.querySelector(".dropdown-tv-name").textContent;
+
+      // Find the specific click result from the array
+      const result = tvSearchResults.filter(
+        (tv) => tv.show.name === clickedTVShowName
+      );
+      // Render the specific click result from the dropdown list
+      renderResultOnPage(createResultHtml(result));
+      resultListEl.classList.add("hidden");
     });
-    notClicked = true;
   }
 };
 
-// Click the search button
+// Click the search button to Google it more
 searchBtn.addEventListener("click", function () {
   const value = currentInputVal;
-  const url = `http://www.google.com/search?q=${value}`;
-  window.open(url, "_blank");
-  removeSearchResultList();
-});
-
-// Click the result from the dropdown
-resultListEl.addEventListener("click", function (e) {
-  const clickedResultText = e.target.textContent;
-  notClicked = false;
-  renderSearchResult(clickedResultText);
-  removeSearchResultList();
-  inputEl.value = "";
+  if (value) {
+    const url = `http://www.google.com/search?q=${value}`;
+    window.open(url, "_blank");
+    removeSearchResultList();
+  }
 });
 
 // -------------------------------------------------------------------------
-// Remore dropdown results
+// Remove dropdown results
 const removeSearchResultList = function () {
   while (resultListEl.firstChild) {
     resultListEl.removeChild(resultListEl.firstChild);
@@ -81,8 +90,8 @@ const removeSearchResultContent = function () {
 };
 // -------------------------------------------------------------------------
 
-// Render the search result content
-const renderResults = function (tvSearchResults) {
+// Create the search result content
+const createResultHtml = function (tvSearchResults) {
   const tvShowCardResultEl = tvSearchResults.map((tv) => {
     const tvCard = document.createElement("div");
     tvCard.classList.add("tv-show-card");
@@ -106,8 +115,6 @@ const renderResults = function (tvSearchResults) {
 
     const learnMoreBtn = tvCard.querySelector(".learn-more-btn");
     learnMoreBtn.addEventListener("click", function () {
-      const name = tv.show?.name;
-      console.log(`TV name is ${name}`);
       removeSearchResultContent();
       const moreDetailsEl = renderMoreDetailsElements(tv);
       searchResultEl.insertAdjacentHTML("beforeend", moreDetailsEl);
@@ -118,12 +125,23 @@ const renderResults = function (tvSearchResults) {
   return tvShowCardResultEl;
 };
 
+// Render the search result content
+const renderResultOnPage = function (resultEl) {
+  removeSearchResultContent();
+  const cardResult = resultEl;
+  cardResult.map((result) => {
+    searchResultEl.append(result);
+  });
+};
+
+// Click anywhere else on the page other than dropdown list to close it
 document.querySelector("body").addEventListener("click", function (e) {
   if (!e.target.closest(".search-result")) {
     removeSearchResultList();
   }
 });
 
+// Create the html elements for More Details page
 const renderMoreDetailsElements = function (tv) {
   const imdbLink = `https://www.imdb.com/title/${tv.show?.externals?.imdb}`;
   const tvrageLink = `https://www.imdb.com/title/${tv.show?.externals?.tvrage}`;
@@ -138,7 +156,7 @@ const renderMoreDetailsElements = function (tv) {
                 <div class="info-title">🎞TV Show Information</div>
                 <div class="name">Name: <span>${tv.show?.name}</span></div>
                 <div class="runtime">Runtime: <span>${
-                  tv.show?.runtime || "Unknown"
+                  tv.show?.runtime || "Varies"
                 }</span></div>
                 <div class="premiered">Premiered on: <span>${
                   tv.show?.premiered || "Unknown"
@@ -156,20 +174,20 @@ const renderMoreDetailsElements = function (tv) {
             <div class="tv-show-details">
                 <div class="details-title">🎬Details</div>
                 <div class="country">Country: <span>${
-                  tv.show?.network?.country?.name || "Unknown"
+                  tv.show?.network?.country?.name || "Varies"
                 }</span></div>
                 <div class="language">Language: <span>${
                   tv.show?.language || "Unknown"
                 }</span></div>
                 <div class="network">Network: <span>${
-                  tv.show?.network?.name || "Unknown"
+                  tv.show?.network?.name || "Varies"
                 }</span></div>
                 <div class="summary">Summary: <span class=summary-text>${
                   tv.show?.summary || ""
                 }</span></div>
             </div>
-            <div class="external-links">
-                <div>Check is out at: </div>
+            <div class="external-links-div">
+                <div>More on: </div>
                 <div class="imdb-links"><a class="external-link external-link-imdb" href="${imdbLink}"></a></div>
                 <div class="tvrage"><a class="external-link external-link-tvrage" href="${tvrageLink}"></a></div>
                 <div class="thetvdb"><a class="external-link external-link-thetvdb" href="${thetvdbLink}"></a></div>
