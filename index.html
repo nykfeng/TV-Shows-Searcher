@@ -12,6 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:ital,wght@0,100;0,300;0,400;1,100&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style/trending.css">
 
     <script src="app.js" type="module" defer></script>
     <script src="./js/fetch.js" type="module"></script>
@@ -23,7 +24,6 @@
 <body>
     <header>
         <div class="title"><a class="title-a-tag" href="index.html">📺TV Shows Searcher</a></div>
-
         <div class="credit">Powered by
             <img class="credit-img" src="https://static.tvmaze.com/images/api/tvm_api.png" alt="TVMaze logo">
         </div>
@@ -43,6 +43,57 @@
     <main class="result-area">
 
     </main>
+
+    <div class="trendingTV">
+        <div class="trending-title">📡Trending TV</div>
+        <div class="trending-card">
+            <div class="trending-rank">1</div>
+            <div class="trending-card-front">
+                <img class="front-image"
+                    src="https://static.tvmaze.com/uploads/images/original_untouched/370/925822.jpg" alt="">
+                <div class="trending-name">The Witcher</div>
+                <div class="bottom-info">
+                    <div class="trending-rating">
+                        <span>8.3</span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="trending-cast">
+                        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/166/415837.jpg" alt=""
+                            class="trending-cast-img">
+                        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/156/390699.jpg" alt=""
+                            class="trending-cast-img">
+                        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/170/426831.jpg" alt=""
+                            class="trending-cast-img">
+                    </div>
+                </div>
+            </div>
+            <div class="trending-card-back">
+
+                <button class="trending-start-watching">Start Watching</button>
+                <div class="trending-cast-more">
+                    <div class="trending-cast-detail">
+                        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/166/415837.jpg" alt=""
+                            class="trending-cast-img">
+                        <p class="trending-cast-name">Henry Cavill</p>
+                    </div>
+                    <div class="trending-cast-detail">
+                        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/156/390699.jpg" alt=""
+                            class="trending-cast-img">
+                        <p class="trending-cast-name">Freya Allan</p>
+                    </div>
+                    <div class="trending-cast-detail">
+                        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/170/426831.jpg" alt=""
+                            class="trending-cast-img">
+                        <p class="trending-cast-name">Anya Chalotra</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-card-background">
+
+            </div>
+        </div>
+    </div>
 
 </body>
 

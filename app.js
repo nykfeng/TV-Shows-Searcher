@@ -57,6 +57,8 @@ const renderSearchResult = async function (currentInput) {
       );
       // Render the specific click result from the dropdown list
       renderResultOnPage(createResultHtml(result));
+      // TODO
+      // Change the flex justify-content attribute to left from center
       resultListEl.classList.add("hidden");
     });
   }
@@ -144,8 +146,8 @@ document.querySelector("body").addEventListener("click", function (e) {
 // Create the html elements for More Details page
 const renderMoreDetailsElements = function (tv) {
   const imdbLink = `https://www.imdb.com/title/${tv.show?.externals?.imdb}`;
-  const tvrageLink = `https://www.imdb.com/title/${tv.show?.externals?.tvrage}`;
-  const thetvdbLink = `https://www.imdb.com/title/${tv.show?.externals?.thetvdb}`;
+  const tvrageLink = `https://www.tvrage.com/title/${tv.show?.externals?.tvrage}`;
+  const thetvdbLink = `https://www.thetvdb.com/search?query=${tv.show?.externals?.thetvdb}`;
   const html = `
     <div class="more-details">
             <div class="poster">

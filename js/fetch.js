@@ -6,6 +6,10 @@ const TVShows = async function (searchQuery) {
   return data;
 };
 
+// const trendingTV = async function () {
+//   const url =
+// };
+
 export default {
   TVShows,
 };

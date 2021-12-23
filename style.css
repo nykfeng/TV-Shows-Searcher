@@ -7,7 +7,6 @@
   --main-color: #099e58;
   --secondary-color: #16e7dd;
   --green-price-color: #66f115;
-  --red-price-color: #e02401;
   --primary-gray-color: #f7f7f7;
   --secondary-gray-color: #a09e9e;
 }
@@ -144,8 +143,6 @@ Main result content section
   flex-wrap: wrap;
   justify-content: flex-start;
 
-  /* display: grid;
-  grid-template-columns: repeat(4, 1fr); */
   gap: 1rem;
 }
 
@@ -261,7 +258,8 @@ Main more details content section
 }
 
 .summary-text {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  line-height: 3rem;
 }
 
 .info-title,
