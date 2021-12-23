@@ -12,6 +12,13 @@ let tvSearchResults = [];
 // -------------------------------------------------------------------------
 // Listen for input change from the search box
 inputEl.addEventListener("input", async function (e) {
+  if (e.target.value === "") {
+    removeSearchResultList();
+    removeSearchResultContent();
+    console.log("Emptied search input");
+    return;
+  }
+
   let currentInput = e.target.value.toLowerCase();
   currentInputVal = currentInput;
   if (currentInputVal !== "") {
@@ -81,7 +88,10 @@ const removeSearchResultList = function () {
   while (resultListEl.firstChild) {
     resultListEl.removeChild(resultListEl.firstChild);
   }
-  resultListEl.classList.add("hidden");
+  // If the result area element does not have hidden class, add it
+  if (!resultListEl.classList.contains("hidden")) {
+    resultListEl.classList.add("hidden");
+  }
 };
 
 // -------------------------------------------------------------------------
@@ -316,8 +326,9 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
                 </div>
             </div>
             <div class="trending-card-back">
-
-                <button class="trending-start-watching">Start Watching</button>
+                <a class="trending-start-watching" href="${
+                  tv.showInfo.data.officialSite
+                }">Start Watching</a>
                 <div class="trending-cast-more">
                     <div class="trending-cast-detail">
                         <img src="${

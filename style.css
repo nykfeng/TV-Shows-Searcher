@@ -141,7 +141,7 @@ Main result content section
   padding: 2rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
 
   gap: 1rem;
 }
