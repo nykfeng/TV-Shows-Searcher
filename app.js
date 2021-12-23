@@ -4,6 +4,7 @@ const inputEl = document.querySelector(".input-bar");
 const resultListEl = document.querySelector(".result-list");
 const searchBtn = document.querySelector(".search-bar-btn");
 const searchResultEl = document.querySelector(".result-area");
+const mainDisplayEl = document.querySelector(".main-display-content");
 let currentInputVal;
 
 let tvSearchResults = [];
@@ -198,3 +199,155 @@ const renderMoreDetailsElements = function (tv) {
     `;
   return html;
 };
+
+// const parser = new DOMParser();
+// let popularTVHtml;
+
+// popularTVHtml = parser.parseFromString(await fetch.trendingTV(), "text/html");
+
+// console.log(popularTVHtml);
+
+// const tvNames = popularTVHtml.querySelectorAll(".column-block");
+
+// console.log(tvNames);
+// const tvNamesCodeArr = [];
+
+// tvNames.forEach((tvEl) => {
+//   tvNamesCodeArr.push(tvEl.getAttribute("data-key"));
+// });
+
+// console.log(tvNamesCodeArr);
+
+const trendingAndPopularTvShows = async function () {
+  const trendingListCode = [];
+  const parser = new DOMParser();
+  const popularTVHtml = parser.parseFromString(
+    await fetch.trendingTV(),
+    "text/html"
+  );
+
+  // Pulling the list from the website
+  const tvNamesEl = popularTVHtml.querySelectorAll(".column-block");
+  tvNamesEl.forEach((tvEl) => {
+    trendingListCode.push(tvEl.getAttribute("data-key"));
+  });
+
+  const TVShowFullInfo = []; // To store both show and cast info
+
+  // Now make API calls to get tv show info and cast info
+  // We just want 10 shows for trending and popular
+  for (let i = 0; i < 10; i++) {
+    const tvShowInfo = await fetch.TVShowByCode(trendingListCode[i]);
+    const tvShowCastInfo = await fetch.TVShowCast(trendingListCode[i]);
+
+    TVShowFullInfo.push({ showInfo: tvShowInfo, cast: tvShowCastInfo });
+  }
+
+  // 10 popular trending tv shows along with cast info are store in the array
+
+  // Now we can render them
+  console.log(TVShowFullInfo);
+  const trendingEl = renderTrendingElements(TVShowFullInfo);
+
+  mainDisplayEl.append(trendingEl);
+};
+
+const renderTrendingElements = function (trendingListOfTVToRender) {
+  const trendingTVDivEl = document.createElement("div");
+  trendingTVDivEl.classList = "trendingTV";
+  const trendingTVDivTitleEl = document.createElement("div");
+  trendingTVDivTitleEl.classList = "trending-title";
+  trendingTVDivTitleEl.textContent = "📡Trending TV";
+  mainDisplayEl.append(trendingTVDivTitleEl);
+
+  trendingListOfTVToRender.forEach((tv, i) => {
+    const trendingCardEl = document.createElement("div");
+    trendingCardEl.classList = "trending-card";
+
+    const html = `
+            <div class="trending-rank ${
+              i === 0
+                ? "gold-rank"
+                : i === 1
+                ? "silver-rank"
+                : i === 2
+                ? "bronze-rank"
+                : ""
+            }">${i + 1}</div>
+            <div class="trending-card-front">
+                <img class="front-image"
+                    src="${tv.showInfo.data.image.original}" alt="${
+      tv.showInfo.data.name
+    } poster">
+                <div class="trending-name">${tv.showInfo.data.name}</div>
+                <div class="bottom-info">
+                    <div class="trending-rating">
+                        <span>${tv.showInfo.data.rating.average}</span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="trending-cast">
+                        <img src="${
+                          tv.cast.data["0"].person.image.medium
+                        }" alt="${tv.cast.data["0"].person.name}"
+                            class="trending-cast-img">
+                        <img src="${
+                          tv.cast.data["1"].person.image.medium
+                        }" alt="${tv.cast.data["1"].person.name}"
+                            class="trending-cast-img">
+                        <img src="${
+                          tv.cast.data["2"].person.image.medium
+                        }" alt="${tv.cast.data["2"].person.name}"
+                            class="trending-cast-img">
+                    </div>
+                </div>
+            </div>
+            <div class="trending-card-back">
+
+                <button class="trending-start-watching">Start Watching</button>
+                <div class="trending-cast-more">
+                    <div class="trending-cast-detail">
+                        <img src="${
+                          tv.cast.data["0"].person.image.medium
+                        }" alt="${tv.cast.data["0"].person.name}"
+                            class="trending-cast-img">
+                        <p class="trending-cast-name">${
+                          tv.cast.data["0"].person.name
+                        }</p>
+                    </div>
+                    <div class="trending-cast-detail">
+                        <img src="${
+                          tv.cast.data["1"].person.image.medium
+                        }" alt="${tv.cast.data["1"].person.name}"
+                            class="trending-cast-img">
+                        <p class="trending-cast-name">${
+                          tv.cast.data["1"].person.name
+                        }</p>
+                    </div>
+                    <div class="trending-cast-detail">
+                        <img src="${
+                          tv.cast.data["2"].person.image.medium
+                        }" alt="${tv.cast.data["2"].person.name}"
+                            class="trending-cast-img">
+                        <p class="trending-cast-name">${
+                          tv.cast.data["2"].person.name
+                        }</p>
+                    </div>
+                </div>
+            </div>
+      `;
+
+    trendingCardEl.insertAdjacentHTML("beforeend", html);
+    const trendingShowBackgroundDivEL = document.createElement("div");
+    trendingShowBackgroundDivEL.classList = "trending-card-background";
+    trendingShowBackgroundDivEL.style.backgroundImage = `url('${
+      tv.showInfo.data.image.original || ""
+    }')`;
+    trendingCardEl.append(trendingShowBackgroundDivEL);
+
+    trendingTVDivEl.append(trendingCardEl);
+  });
+
+  return trendingTVDivEl;
+};
+
+trendingAndPopularTvShows();

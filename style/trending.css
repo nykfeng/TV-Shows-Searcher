@@ -9,6 +9,10 @@
   --green-price-color: #66f115;
   --primary-gray-color: #f7f7f7;
   --secondary-gray-color: #a09e9e;
+
+  --gold-color: #ffca03;
+  --silver-color: #eaeaea;
+  --bronze-color: #c56824;
 }
 
 *,
@@ -21,6 +25,10 @@
 
 .trendingTV {
   margin: 0 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 90vw;
+  justify-content: center;
 }
 .trending-title {
   background-image: linear-gradient(
@@ -31,6 +39,8 @@
   font-size: 5rem;
   color: #fff;
   letter-spacing: 0.3rem;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .trending-card {
@@ -41,6 +51,7 @@
   border: 0.3rem solid var(--secondary-gray-color);
   border-radius: 2rem;
   overflow: hidden;
+  box-shadow: 0.5rem 0.5rem 1.5rem black;
 }
 
 .trending-rank {
@@ -55,9 +66,31 @@
   clip-path: polygon(100% 0, 100% 100%, 50% 84%, 0% 100%, 0 70%, 0% 0%);
 }
 
+.gold-rank {
+  background-color: var(--gold-color);
+  opacity: 0.8;
+  color: #fff;
+}
+
+.silver-rank {
+  background-color: var(--silver-color);
+  opacity: 0.8;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.bronze-rank {
+  background-color: var(--bronze-color);
+  opacity: 0.8;
+}
+
 /* ====================================
 Front card
 ========================================*/
+.trending-card-front {
+  display: flex;
+  flex-direction: column;
+}
+
 .trending-name {
   font-size: 4rem;
   text-align: center;
@@ -65,7 +98,7 @@ Front card
 }
 
 .front-image {
-  width: 100%;
+  /* width: 100%; */
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.8);
 }
 
@@ -184,6 +217,7 @@ Whole card hover
 .trending-card:hover {
   border: none;
   overflow: visible;
+  box-shadow: none;
 }
 
 .trending-card:hover .trending-card-background {

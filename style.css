@@ -315,3 +315,11 @@ Main more details content section
   background-image: url(/images/thetvdb.png);
   background-color: var(--primary-dark-color);
 }
+
+/* ========================================================================
+Main more details content section
+========================================================================*/
+.main-display-content {
+  display: grid;
+  place-content: center;
+}
