@@ -36,7 +36,7 @@
     var(--secondary-color),
     var(--main-color)
   );
-  font-size: 5rem;
+  font-size: 3vw;
   color: #fff;
   letter-spacing: 0.3rem;
   width: 90%;
@@ -98,7 +98,8 @@ Front card
 }
 
 .front-image {
-  /* width: 100%; */
+  width: 100%;
+  height: 40rem;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.8);
 }
 

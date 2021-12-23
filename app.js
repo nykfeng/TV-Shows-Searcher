@@ -235,21 +235,35 @@ const trendingAndPopularTvShows = async function () {
   const TVShowFullInfo = []; // To store both show and cast info
 
   // Now make API calls to get tv show info and cast info
-  // We just want 10 shows for trending and popular
-  for (let i = 0; i < 10; i++) {
+  // We want 12 shows for trending and popular
+  for (let i = 0; i < 12; i++) {
     const tvShowInfo = await fetch.TVShowByCode(trendingListCode[i]);
     const tvShowCastInfo = await fetch.TVShowCast(trendingListCode[i]);
 
     TVShowFullInfo.push({ showInfo: tvShowInfo, cast: tvShowCastInfo });
   }
 
-  // 10 popular trending tv shows along with cast info are store in the array
+  // 12 popular trending tv shows along with cast info are store in the array
 
   // Now we can render them
   console.log(TVShowFullInfo);
   const trendingEl = renderTrendingElements(TVShowFullInfo);
 
   mainDisplayEl.append(trendingEl);
+  scaleTitleTextToFit();
+};
+
+const scaleTitleTextToFit = function () {
+  const trendingNameEls = document.querySelectorAll(".trending-name");
+
+  trendingNameEls.forEach((titleEl) => {
+    if (titleEl.textContent.length > 16) {
+      titleEl.style.fontSize = "3rem";
+    } else if (titleEl.textContent.length > 27) {
+      titleEl.textContent = titleEl.textContent.substring(0, 27) + "...";
+      titleEl.style.fontSize = "2rem";
+    }
+  });
 };
 
 const renderTrendingElements = function (trendingListOfTVToRender) {
