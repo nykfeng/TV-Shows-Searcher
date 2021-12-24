@@ -62,8 +62,6 @@ const rightBtnActions = function () {
   }
 
   //first card add classlist hide-it,
-  console.log("current first index is ", currentFirst);
-  console.log("New card index is ", newSliderNumber);
 
   const currentCardEl = document.querySelector(`.slider-${currentFirst}`);
   currentCardEl.classList.add("hide-it");

@@ -1,6 +1,7 @@
 import fetch from "./js/fetch.js";
 import trending from "./js/trending.js";
 import cast from "./js/cast.js";
+import people from "./js/people.js";
 
 const inputEl = document.querySelector(".input-bar");
 const resultListEl = document.querySelector(".result-list");
@@ -97,7 +98,7 @@ const removeSearchResultList = function () {
 };
 
 // -------------------------------------------------------------------------
-// Remove the search result (main area)
+// Remove the search result (result area)
 const removeSearchResultContent = function () {
   while (searchResultEl.firstChild) {
     searchResultEl.removeChild(searchResultEl.firstChild);
@@ -258,6 +259,7 @@ const trendingAndPopularTvShows = async function () {
     await fetch.trendingTV(),
     "text/html"
   );
+  const NUMBER_TRENDING = 15; // Want to show 15 trending/popular shows
 
   // Pulling the list from the website
   const tvNamesEl = popularTVHtml.querySelectorAll(".column-block");
@@ -268,15 +270,12 @@ const trendingAndPopularTvShows = async function () {
   const TVShowFullInfo = []; // To store both show and cast info
 
   // Now make API calls to get tv show info and cast info
-  // We want 12 shows for trending and popular
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < NUMBER_TRENDING; i++) {
     const tvShowInfo = await fetch.TVShowByCode(trendingListCode[i]);
     const tvShowCastInfo = await fetch.TVShowCast(trendingListCode[i]);
 
     TVShowFullInfo.push({ showInfo: tvShowInfo, cast: tvShowCastInfo });
   }
-
-  // 12 popular trending tv shows along with cast info are store in the array
 
   // Now we can render them
   // console.log(TVShowFullInfo);
@@ -286,7 +285,6 @@ const trendingAndPopularTvShows = async function () {
   scaleTitleTextToFit();
 
   // Manage the cards for the slider here
-
   trending.resetCards();
 
   // Listen for buttons after they are rendered
@@ -294,6 +292,17 @@ const trendingAndPopularTvShows = async function () {
   const rightBtn = document.querySelector(".right-slider-btn");
   leftBtn.addEventListener("click", trending.leftBtnActions);
   rightBtn.addEventListener("click", trending.rightBtnActions);
+
+  // Listen for actor names clicked
+  const trendingTVEl = document.querySelector(".trendingTV");
+  trendingTVEl.addEventListener("click", function (e) {
+    if (e.target.classList.contains("trending-cast-name")) {
+      const peopleId = e.target.dataset.castId;
+      // Remove already existed elements
+      removeSearchResultContent();
+      people.renderPeopleDetails(peopleId);
+    }
+  });
 };
 
 const scaleTitleTextToFit = function () {
@@ -302,8 +311,12 @@ const scaleTitleTextToFit = function () {
   trendingNameEls.forEach((titleEl) => {
     if (titleEl.textContent.length > 16) {
       titleEl.style.fontSize = "3rem";
-    } else if (titleEl.textContent.length > 27) {
-      titleEl.textContent = titleEl.textContent.substring(0, 27) + "...";
+    }
+    if (titleEl.textContent.length > 21) {
+      titleEl.style.fontSize = "2.5rem";
+    }
+    if (titleEl.textContent.length >= 26) {
+      titleEl.textContent = titleEl.textContent.substring(0, 23) + "...";
       titleEl.style.fontSize = "2rem";
     }
   });
@@ -374,27 +387,27 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
                           tv.cast.data["0"].person.image.medium
                         }" alt="${tv.cast.data["0"].person.name}"
                             class="trending-cast-img">
-                        <p class="trending-cast-name">${
-                          tv.cast.data["0"].person.name
-                        }</p>
+                        <p class="trending-cast-name" data-cast-id='${
+                          tv.cast.data["0"].person.id
+                        }'>${tv.cast.data["0"].person.name}</p>
                     </div>
                     <div class="trending-cast-detail">
                         <img src="${
                           tv.cast.data["1"].person.image.medium
                         }" alt="${tv.cast.data["1"].person.name}"
                             class="trending-cast-img">
-                        <p class="trending-cast-name">${
-                          tv.cast.data["1"].person.name
-                        }</p>
+                        <p class="trending-cast-name" data-cast-id='${
+                          tv.cast.data["1"].person.id
+                        }'>${tv.cast.data["1"].person.name}</p>
                     </div>
                     <div class="trending-cast-detail">
                         <img src="${
                           tv.cast.data["2"].person.image.medium
                         }" alt="${tv.cast.data["2"].person.name}"
                             class="trending-cast-img">
-                        <p class="trending-cast-name">${
-                          tv.cast.data["2"].person.name
-                        }</p>
+                        <p class="trending-cast-name" data-cast-id='${
+                          tv.cast.data["2"].person.id
+                        }'>${tv.cast.data["2"].person.name}</p>
                     </div>
                 </div>
             </div>
@@ -427,4 +440,4 @@ const renderSliderRightBtnElements = function () {
   return html;
 };
 
-const renderPeopleInformation = function (name) {};
+// await people.renderPeopleDetails("40099");

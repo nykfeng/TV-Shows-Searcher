@@ -32,9 +32,25 @@ const TVShowByCode = async function (tvShowCode) {
   return data;
 };
 
+const peopleByCode = async function (castId) {
+  const url = `https://api.tvmaze.com/people/${castId}?embed=castcredits`;
+
+  const data = await axios.get(url);
+  return data;
+};
+
+const TVShowByCodeEmbeddedCast = async function (tvShowCode) {
+  const url = `https://api.tvmaze.com/shows/${tvShowCode}?embed=cast`;
+
+  const data = await axios.get(url);
+  return data;
+};
+
 export default {
   TVShows,
   trendingTV,
   TVShowByCode,
   TVShowCast,
+  peopleByCode,
+  TVShowByCodeEmbeddedCast,
 };

@@ -1,6 +1,3 @@
-.tv-show-cast {
-}
-
 .tv-show-cast-grid {
   display: grid;
   grid-template-columns: auto auto;
@@ -42,15 +39,27 @@
   font-family: "Anton", sans-serif;
   font-size: 4rem;
 }
+.cast-name-div {
+  display: flex;
+}
 
 .cast-name {
   font-family: "Roboto", sans-serif;
   font-size: 4rem;
 }
 
+.cast-name:hover,
+.cast-name:focus {
+  cursor: pointer;
+  color: var(--main-color);
+}
+
+.cast-name:active {
+  transform: scale(0.97);
+}
+
 .cast-list-individual-details span {
   font-size: 1.5rem;
-  /* font-weight: bold; */
   padding-left: 0.5rem;
 }
 

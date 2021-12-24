@@ -1,0 +1,131 @@
+.people-information {
+  width: 100%;
+  justify-content: center;
+}
+
+.people-info-title-bar {
+  display: flex;
+  width: 100%;
+  font-size: 4rem;
+  justify-content: space-between;
+  align-items: center;
+
+  background-image: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--main-color)
+  );
+
+  color: #fff;
+  letter-spacing: 0.3rem;
+  padding: 0 1rem;
+  margin-bottom: 3rem;
+}
+
+.people-info-collapse-btn {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border: 0.3rem solid #fff;
+  font-size: 3rem;
+  color: #fff;
+  background-color: var(--main-color);
+  cursor: pointer;
+}
+
+.people-info-collapse-btn:hover {
+  opacity: 0.5;
+}
+
+.people-info-collapse-btn:active {
+  transform: scale(0.97);
+}
+
+.people-info-details {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.people-info-details-box {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.people-portrait {
+  max-width: 50rem;
+  max-height: 70rem;
+  border-radius: 2rem;
+  border: 0.3rem solid var(--secondary-gray-color);
+}
+.people-info-text {
+  font-size: 2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 100;
+}
+
+.people-info-text span {
+  font-family: "Anton", sans-serif;
+}
+.people-info-text-title {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+}
+
+.other-shows-box,
+.other-show-poster-title,
+.other-show-character-portrait-div {
+  display: flex;
+}
+
+.other-shows-box {
+  gap: 2rem;
+  border-bottom: 0.5rem solid var(--main-color);
+  max-width: 55rem;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+}
+
+.other-show-poster-title,
+.other-show-character-portrait-div {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.other-show-poster-title {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.other-show-title {
+  text-align: left;
+  font-size: 2.5rem;
+}
+
+.other-show-character-portrait-div {
+  font-size: 2.5rem;
+  justify-content: flex-start;
+}
+
+.other-show-character-name {
+  padding: 0 0.5rem;
+  background-color: var(--main-color);
+  color: #fff;
+  opacity: 0.9;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.other-show-portrait {
+  width: 20rem;
+  height: 20rem;
+  object-fit: none;
+  border-radius: 50%;
+  border: 2px solid var(--secondary-gray-color);
+  box-shadow: 0.2rem 0.2rem 1.5rem black;
+}
+
+.other-show-poster {
+  box-shadow: 0.5rem 0.5rem 1.5rem black;
+}

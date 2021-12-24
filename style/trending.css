@@ -242,6 +242,16 @@ Back card
   white-space: nowrap;
 }
 
+.trending-cast-name:hover,
+.trending-cast-name:focus {
+  cursor: pointer;
+  color: var(--main-color);
+}
+
+.trending-cast-name:active {
+  transform: scale(0.97);
+}
+
 /* ====================================
 Background
 ========================================*/
