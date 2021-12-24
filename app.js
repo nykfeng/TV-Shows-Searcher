@@ -1,4 +1,5 @@
 import fetch from "./js/fetch.js";
+import trending from "./js/trending.js";
 
 const inputEl = document.querySelector(".input-bar");
 const resultListEl = document.querySelector(".result-list");
@@ -261,6 +262,16 @@ const trendingAndPopularTvShows = async function () {
 
   mainDisplayEl.append(trendingEl);
   scaleTitleTextToFit();
+
+  // Manage the cards for the slider here
+
+  trending.resetCards();
+
+  // Listen for buttons after they are rendered
+  const leftBtn = document.querySelector(".left-slider-btn");
+  const rightBtn = document.querySelector(".right-slider-btn");
+  leftBtn.addEventListener("click", trending.leftBtnActions);
+  rightBtn.addEventListener("click", trending.rightBtnActions);
 };
 
 const scaleTitleTextToFit = function () {
@@ -281,12 +292,18 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
   trendingTVDivEl.classList = "trendingTV";
   const trendingTVDivTitleEl = document.createElement("div");
   trendingTVDivTitleEl.classList = "trending-title";
-  trendingTVDivTitleEl.textContent = "📡Trending TV";
+  trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
+
   mainDisplayEl.append(trendingTVDivTitleEl);
+  trendingTVDivTitleEl.insertAdjacentHTML(
+    "afterend",
+    renderSliderLeftBtnElements()
+  );
 
   trendingListOfTVToRender.forEach((tv, i) => {
     const trendingCardEl = document.createElement("div");
     trendingCardEl.classList = "trending-card";
+    trendingCardEl.classList.add(`slider-${i + 1}`);
 
     const html = `
             <div class="trending-rank ${
@@ -371,8 +388,21 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
 
     trendingTVDivEl.append(trendingCardEl);
   });
+  mainDisplayEl.insertAdjacentHTML("beforeend", renderSliderRightBtnElements());
 
   return trendingTVDivEl;
 };
 
 trendingAndPopularTvShows();
+
+const renderSliderLeftBtnElements = function () {
+  const html = `<button class="slider-button left-slider-btn"><i class="fas fa-chevron-left"></i></button>`;
+  return html;
+};
+
+const renderSliderRightBtnElements = function () {
+  const html = `<button class="slider-button right-slider-btn"><i class="fas fa-chevron-right"></i></button>`;
+  return html;
+};
+
+const renderPeopleInformation = function (name) {};

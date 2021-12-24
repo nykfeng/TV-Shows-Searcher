@@ -23,24 +23,74 @@
   box-sizing: border-box;
 }
 
-.trendingTV {
+/* .trendingTV {
   margin: 0 5rem;
   display: flex;
   flex-wrap: wrap;
   max-width: 90vw;
   justify-content: center;
+} */
+
+.trendingTV {
+  margin: 0 5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  overflow: visible;
 }
+
+.hide-it {
+  display: none;
+}
+
+.main-display-content {
+  position: relative;
+}
+
+.slider-button {
+  position: absolute;
+  width: 7rem;
+  height: 7rem;
+  font-size: 5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.slider-button:hover {
+  opacity: 0.5;
+}
+
+.slider-button:active {
+  transform: scale(0.95);
+}
+
+.left-slider-btn {
+  top: 50%;
+  left: 5%;
+  color: var(--secondary-color);
+  border: 0.3rem solid var(--secondary-color);
+}
+
+.right-slider-btn {
+  top: 50%;
+  right: 5%;
+  border: 0.3rem solid var(--main-color);
+  color: var(--main-color);
+}
+
 .trending-title {
   background-image: linear-gradient(
     to right,
     var(--secondary-color),
     var(--main-color)
   );
+  width: 100%;
   font-size: 3vw;
   color: #fff;
   letter-spacing: 0.3rem;
-  width: 90%;
   margin: 0 auto;
+  padding: 0 3rem;
 }
 
 .trending-card {
@@ -95,6 +145,10 @@ Front card
   font-size: 4rem;
   text-align: center;
   white-space: nowrap;
+  min-height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .front-image {
@@ -193,9 +247,9 @@ Background
 ========================================*/
 
 .trending-card-background {
-  background-image: url("https://static.tvmaze.com/uploads/images/original_untouched/370/925822.jpg");
   opacity: 0.78;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.8);
+
   background-size: cover;
   position: absolute;
   top: 0;
