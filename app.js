@@ -1,5 +1,6 @@
 import fetch from "./js/fetch.js";
 import trending from "./js/trending.js";
+import cast from "./js/cast.js";
 
 const inputEl = document.querySelector(".input-bar");
 const resultListEl = document.querySelector(".result-list");
@@ -109,7 +110,7 @@ const createResultHtml = function (tvSearchResults) {
   const tvShowCardResultEl = tvSearchResults.map((tv) => {
     const tvCard = document.createElement("div");
     tvCard.classList.add("tv-show-card");
-    tvCard.style.backgroundImage = `url('${tv.show?.image?.medium || ""}')`;
+    tvCard.style.backgroundImage = `url('${tv.show?.image?.original || ""}')`;
     const tvName =
       tv.show?.name.length >= 24
         ? tv.show?.name.substring(0, 21) + "..."
@@ -132,11 +133,41 @@ const createResultHtml = function (tvSearchResults) {
       removeSearchResultContent();
       const moreDetailsEl = renderMoreDetailsElements(tv);
       searchResultEl.insertAdjacentHTML("beforeend", moreDetailsEl);
+
+      showCastInTVShowDetails(tv.show.id);
     });
 
     return tvCard;
   });
   return tvShowCardResultEl;
+};
+
+// Listen for cast dropdown button - render and hide unhide
+const showCastInTVShowDetails = function (showID) {
+  const dropdownBtn = document.querySelector(".cast-title-dropdown");
+  let expanded = false;
+  dropdownBtn.addEventListener("click", function () {
+    let castGridEl = document.querySelector(".tv-show-cast-grid");
+    if (!expanded) {
+      // If the cast grid info has not set generated
+      if (!castGridEl) {
+        cast.renderInDetails(showID);
+        expanded = true;
+        dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
+      } else {
+        // cast info is there, so no need to generate again, set display
+        castGridEl.style.display = "grid";
+        expanded = true;
+        dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
+      }
+    } else {
+      // cast info is there set display to none to hide
+      castGridEl = document.querySelector(".tv-show-cast-grid");
+      castGridEl.style.display = "none";
+      expanded = false;
+      dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-down">`;
+    }
+  });
 };
 
 // Render the search result content
@@ -167,7 +198,7 @@ const renderMoreDetailsElements = function (tv) {
                     alt="${tv.show?.name} poster">
             </div>
             <div class="tv-show-info">
-                <div class="info-title">🎞TV Show Information</div>
+                <div class="info-title">🎬TV Show Information</div>
                 <div class="name">Name: <span>${tv.show?.name}</span></div>
                 <div class="runtime">Runtime: <span>${
                   tv.show?.runtime || "Varies"
@@ -206,28 +237,19 @@ const renderMoreDetailsElements = function (tv) {
                 <div class="tvrage"><a class="external-link external-link-tvrage" href="${tvrageLink}"></a></div>
                 <div class="thetvdb"><a class="external-link external-link-thetvdb" href="${thetvdbLink}"></a></div>
             </div>
+            <div class="tv-show-cast">
+              <div class="cast-title">
+              <p class="cast-title-text">🎬Cast</p>
+              <button class="cast-title-dropdown"><i class="fas fa-chevron-circle-down"></i></button>
+              
+              </div>
+
+
+            </div>
         </div>
     `;
   return html;
 };
-
-// const parser = new DOMParser();
-// let popularTVHtml;
-
-// popularTVHtml = parser.parseFromString(await fetch.trendingTV(), "text/html");
-
-// console.log(popularTVHtml);
-
-// const tvNames = popularTVHtml.querySelectorAll(".column-block");
-
-// console.log(tvNames);
-// const tvNamesCodeArr = [];
-
-// tvNames.forEach((tvEl) => {
-//   tvNamesCodeArr.push(tvEl.getAttribute("data-key"));
-// });
-
-// console.log(tvNamesCodeArr);
 
 const trendingAndPopularTvShows = async function () {
   const trendingListCode = [];
@@ -257,7 +279,7 @@ const trendingAndPopularTvShows = async function () {
   // 12 popular trending tv shows along with cast info are store in the array
 
   // Now we can render them
-  console.log(TVShowFullInfo);
+  // console.log(TVShowFullInfo);
   const trendingEl = renderTrendingElements(TVShowFullInfo);
 
   mainDisplayEl.append(trendingEl);

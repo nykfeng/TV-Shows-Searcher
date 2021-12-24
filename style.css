@@ -33,6 +33,7 @@ header {
 
 .title {
   font-size: 3vw;
+
   display: inline-block;
 }
 
@@ -237,7 +238,7 @@ Main more details content section
   background-color: var(--primary-gray-color);
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto 1fr auto;
   font-size: 3rem;
   column-gap: 3rem;
   row-gap: 1rem;
@@ -263,7 +264,8 @@ Main more details content section
 }
 
 .info-title,
-.details-title {
+.details-title,
+.cast-title {
   background-image: linear-gradient(
     to right,
     var(--secondary-color),
@@ -314,6 +316,32 @@ Main more details content section
 .external-link-thetvdb {
   background-image: url(/images/thetvdb.png);
   background-color: var(--primary-dark-color);
+}
+
+/* ======== addon cast dropdown section  ========== */
+.cast-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cast-title-text {
+  display: inline-block;
+  font-family: "Anton", sans-serif;
+}
+
+.cast-title-dropdown {
+  min-width: 5rem;
+  min-height: 5rem;
+  background: none;
+  padding: 0.5rem;
+  border: none;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.cast-title-dropdown:hover {
+  opacity: 0.5;
 }
 
 /* ========================================================================

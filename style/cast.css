@@ -1,0 +1,68 @@
+.tv-show-cast {
+}
+
+.tv-show-cast-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 1fr auto;
+  row-gap: 2rem;
+  padding: 1rem;
+}
+
+.cast-title {
+  grid-column: 1/-1;
+}
+
+.cast-list {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  justify-content: center;
+  gap: 15rem;
+}
+
+.cast-list-individual-box {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2rem;
+}
+
+.cast-list-individual-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cast-list-individual-details p {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 0.5rem 0.1rem;
+}
+.character-name {
+  font-family: "Anton", sans-serif;
+  font-size: 4rem;
+}
+
+.cast-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 4rem;
+}
+
+.cast-list-individual-details span {
+  font-size: 1.5rem;
+  /* font-weight: bold; */
+  padding-left: 0.5rem;
+}
+
+.portrait-real {
+  width: 20rem;
+  height: 20rem;
+  object-fit: none;
+  border-radius: 50%;
+  border: 2px solid var(--secondary-gray-color);
+}
+
+.portrait-in-show {
+  border-radius: 2rem;
+  border: 0.3rem solid var(--secondary-gray-color);
+}

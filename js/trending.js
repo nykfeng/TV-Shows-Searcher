@@ -1,21 +1,12 @@
 let currentFirst = 1;
 let numberToDisplay = 1;
 let totalNumberOfCards;
-
-// const leftBtn = document.querySelector(".left-slider-btn");
-// const rightBtn = document.querySelector(".right-slider-btn");
 let allCards;
 
-// window.onload = function () {
-//   console.log("here");
-//   resetCards();
-// };
-
 const resetCards = function () {
-  hideAllCards();
+  hideAllCards(); // must be first here so that totalNumberOfCards and allCards are initialized
   numberToDisplay = calculateNumberOfTVShowCards();
-  console.log(`Number to display ${numberToDisplay}`);
-  hideAndUnhideCards(numberToDisplay, 1);
+  hideAndUnhideCards(numberToDisplay, 1); // As it is reset, so the first index is 1
 };
 
 const hideAllCards = function () {
@@ -41,23 +32,7 @@ const hideAndUnhideCards = function (numberOfCards, startIndex) {
   });
 };
 
-// leftBtn.addEventListener("click", function () {
-//   if (currentFirst === 1) {
-//     return;
-//   } else {
-//     currentFirst--;
-//     let newSliderNumber = currentFirst + numberToDisplay;
-//     if (newSliderNumber > totalNumberOfCards) {
-//       return;
-//     }
-
-//     const currentCardEl = document.querySelector(`.slider-${currentFirst}`);
-//     currentCardEl.classList.remove("hide-it");
-//     const newCardEl = document.querySelector(`.slider-${newSliderNumber}`);
-//     newCardEl.classList.add("hide-it");
-//   }
-// });
-
+// For actions after left button is fire
 const leftBtnActions = function () {
   if (currentFirst === 1) {
     return;
@@ -75,6 +50,7 @@ const leftBtnActions = function () {
   }
 };
 
+// For actions after right button is fire
 const rightBtnActions = function () {
   if (currentFirst + numberToDisplay - 1 === totalNumberOfCards) {
     return;
@@ -99,30 +75,6 @@ const rightBtnActions = function () {
   currentFirst++;
 };
 
-// rightBtn.addEventListener("click", function () {
-//   if (currentFirst + numberToDisplay - 1 === totalNumberOfCards) {
-//     return;
-//   }
-
-//   let newSliderNumber = currentFirst + numberToDisplay;
-//   if (newSliderNumber > totalNumberOfCards) {
-//     newSliderNumber = newSliderNumber % totalNumberOfCards;
-//   }
-
-//   //first card add classlist hide-it,
-//   console.log("current first index is ", currentFirst);
-//   console.log("New card index is ", newSliderNumber);
-
-//   const currentCardEl = document.querySelector(`.slider-${currentFirst}`);
-//   currentCardEl.classList.add("hide-it");
-
-//   const newCardEl = document.querySelector(`.slider-${newSliderNumber}`);
-//   newCardEl.classList.remove("hide-it");
-
-//   // This has to be after the new card number was taken
-//   currentFirst++;
-// });
-
 const displayTVShowCards = function () {
   hideAllCards();
   numberToDisplay = calculateNumberOfTVShowCards();
@@ -130,11 +82,9 @@ const displayTVShowCards = function () {
   if (currentFirst > totalNumberOfCards) {
     return;
   }
-
   if (currentFirst > totalNumberOfCards - numberToDisplay) {
     currentFirst = totalNumberOfCards - numberToDisplay + 1;
   }
-
   hideAndUnhideCards(numberToDisplay, currentFirst);
 };
 
