@@ -3,7 +3,6 @@ import fetch from "./fetch.js";
 const renderPeopleDetails = async function (castId) {
   const peopleData = await fetch.peopleByCode(castId);
 
-  console.log(peopleData);
   const resultAreaEl = document.querySelector(".result-area");
   // remove any already existed elements inside
 
@@ -26,8 +25,6 @@ const renderPeopleDetails = async function (castId) {
   peopleInfoDetailEl.append(filmographyContainerEl);
 
   const peopleName = peopleData.data.name;
-  console.log(peopleName);
-  console.log(peopleData.data._embedded);
 
   // Keep the filmography to show at max at 8.
   const numberOfFilmography =
@@ -109,7 +106,6 @@ const otherFilmography = async function (data, name) {
   const showId = getShowIdFromPeopleInfoAPI(data); // data passed in here only to get the show ID
   const showInfo = await fetch.TVShowByCodeEmbeddedCast(showId); // Now we got the show info along with embedded cast
   const characterInfo = getCharacterInfo(showInfo.data._embedded.cast, name);
-  console.log(showInfo);
 
   const html = `
   <div class="people-other-shows">

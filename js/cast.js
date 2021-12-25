@@ -24,7 +24,7 @@ const renderInDetails = async function (tvShowCode) {
             <p class="character-name">${data.character.name}</p>
             <div class="cast-name-div">
                 <span>by</span>
-                <p class="cast-name data-cast-id=${data.person.id}">${data.person.name}</p>
+                <p class="cast-name" data-cast-id="${data.person.id}"">${data.person.name}</p>
             </div>
             <img src="${data.person.image?.medium}" alt="${data.person.name}"
                 class="portrait-real">

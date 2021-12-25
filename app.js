@@ -18,7 +18,7 @@ inputEl.addEventListener("input", async function (e) {
   if (e.target.value === "") {
     removeSearchResultList();
     removeSearchResultContent();
-    console.log("Emptied search input");
+    currentInputVal = "";
     return;
   }
 
@@ -68,19 +68,25 @@ const renderSearchResult = async function (currentInput) {
       );
       // Render the specific click result from the dropdown list
       renderResultOnPage(createResultHtml(result));
-      // TODO
-      // Change the flex justify-content attribute to left from center
       resultListEl.classList.add("hidden");
     });
   }
 };
 
-// Click the search button to Google it more
+// Click the search button to close the search dropdown and show the result
+// Effectively removing the result dropdown list
+// Since the result has been rendered
 searchBtn.addEventListener("click", function () {
-  const value = currentInputVal;
-  if (value) {
-    const url = `http://www.google.com/search?q=${value}`;
-    window.open(url, "_blank");
+  removeSearchResultList();
+
+  // Render the search result in card form in the main result area
+  renderResultOnPage(createResultHtml(tvSearchResults));
+});
+
+// Pressing enter on input search is effectively removing the search dropdown
+// Since result has been rendered
+inputEl.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
     removeSearchResultList();
   }
 });
@@ -153,6 +159,7 @@ const showCastInTVShowDetails = function (showID) {
       // If the cast grid info has not set generated
       if (!castGridEl) {
         cast.renderInDetails(showID);
+        openCastInfoInShowDetails();
         expanded = true;
         dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
       } else {
@@ -167,6 +174,21 @@ const showCastInTVShowDetails = function (showID) {
       castGridEl.style.display = "none";
       expanded = false;
       dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-down">`;
+    }
+  });
+
+  // Listen for clicks on actor names to rendered actor details
+};
+
+const openCastInfoInShowDetails = function () {
+  const castEl = document.querySelector(".tv-show-cast");
+  castEl.addEventListener("click", function (e) {
+    if (e.target.classList.contains("cast-name")) {
+      const peopleId = e.target.dataset.castId;
+      // Remove already existed elements
+      removeSearchResultContent();
+      // Now render the people detail
+      people.renderPeopleDetails(peopleId);
     }
   });
 };
@@ -252,16 +274,18 @@ const renderMoreDetailsElements = function (tv) {
   return html;
 };
 
+// Grab trending list from non api source first, then render from api source
 const trendingAndPopularTvShows = async function () {
   const trendingListCode = [];
   const parser = new DOMParser();
+  // Reading from non API source then use DOMParser to read the info
   const popularTVHtml = parser.parseFromString(
     await fetch.trendingTV(),
     "text/html"
   );
   const NUMBER_TRENDING = 15; // Want to show 15 trending/popular shows
 
-  // Pulling the list from the website
+  // Pulling the list from the website, non API
   const tvNamesEl = popularTVHtml.querySelectorAll(".column-block");
   tvNamesEl.forEach((tvEl) => {
     trendingListCode.push(tvEl.getAttribute("data-key"));
