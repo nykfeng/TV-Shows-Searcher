@@ -86,6 +86,7 @@ const displayTVShowCards = function () {
   hideAndUnhideCards(numberToDisplay, currentFirst);
 };
 
+// Adjust the number of tv show cards to display based on the size of the screen
 window.addEventListener("resize", displayTVShowCards);
 
 function calculateNumberOfTVShowCards() {

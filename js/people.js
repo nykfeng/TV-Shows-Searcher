@@ -44,7 +44,7 @@ const renderPeopleDetails = async function (castId) {
   });
 
   const closePeopleDetailsBtn = document.querySelector(
-    ".people-info-collapse-btn"
+    ".people-info-title-bar .close-btn"
   );
   closePeopleDetailsBtn.addEventListener("click", function () {
     peopleSectionEl.remove();
@@ -54,12 +54,10 @@ const renderPeopleDetails = async function (castId) {
 const peopleHeaderTitleElement = function () {
   const html = `
   <div class="people-info-title-bar">
-  <div class="people-info-title-text">
+    <div class="people-info-title-text">
       Actor Information & Filmography
-  </div>
-  <button class="people-info-collapse-btn">
-      X
-  </button>
+    </div>
+    <button class="close-btn">X</button>
 </div>
     `;
   return html;
@@ -113,9 +111,9 @@ const otherFilmography = async function (data, name) {
       <div class="other-show-poster-title">
           <img src="${showInfo.data.image?.medium || ""}" alt="${name}"
               class="other-show-poster">
-          <div class="other-show-title">${
-            showInfo.data.name
-          } (${calculatePremierYear(showInfo.data.premiered)})</div>
+          <div class="other-show-title" data-show-id='${showInfo.data.id}'>${
+    showInfo.data.name
+  } (${calculatePremierYear(showInfo.data.premiered)})</div>
       </div>
       <div class="other-show-character-portrait-div">
           <div><span>As</span> <span class="other-show-character-name">${

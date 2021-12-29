@@ -274,6 +274,14 @@ Main more details content section
   color: #fff;
   letter-spacing: 0.3rem;
 }
+
+.info-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
 .external-links-div {
   display: flex;
   justify-content: flex-start;

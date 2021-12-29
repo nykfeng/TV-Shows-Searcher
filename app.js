@@ -141,6 +141,16 @@ const createResultHtml = function (tvSearchResults) {
       const moreDetailsEl = renderMoreDetailsElements(tv);
       searchResultEl.insertAdjacentHTML("beforeend", moreDetailsEl);
 
+      // Listen to close button
+      const tvDetailsCloseBtn = document.querySelector(
+        ".tv-show-info .close-btn"
+      );
+      tvDetailsCloseBtn.addEventListener("click", function () {
+        removeSearchResultContent();
+        currentInputVal = "";
+      });
+
+      // To render the show cast info when clicked
       showCastInTVShowDetails(tv.show.id);
     });
 
@@ -149,7 +159,7 @@ const createResultHtml = function (tvSearchResults) {
   return tvShowCardResultEl;
 };
 
-// Listen for cast dropdown button - render and hide unhide
+// Listen for cast dropdown button - render, hide and unhide
 const showCastInTVShowDetails = function (showID) {
   const dropdownBtn = document.querySelector(".cast-title-dropdown");
   let expanded = false;
@@ -176,19 +186,28 @@ const showCastInTVShowDetails = function (showID) {
       dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-down">`;
     }
   });
-
-  // Listen for clicks on actor names to rendered actor details
 };
 
+// Listen for clicks on the dropdown button for show cast details
 const openCastInfoInShowDetails = function () {
   const castEl = document.querySelector(".tv-show-cast");
-  castEl.addEventListener("click", function (e) {
+  castEl.addEventListener("click", async function (e) {
     if (e.target.classList.contains("cast-name")) {
       const peopleId = e.target.dataset.castId;
       // Remove already existed elements
       removeSearchResultContent();
       // Now render the people detail
-      people.renderPeopleDetails(peopleId);
+      await people.renderPeopleDetails(peopleId);
+      // Now we can listen for the people's other tv shows being clicked
+      const otherShowTitlesEl = document.querySelector(
+        ".filmography-container"
+      );
+      otherShowTitlesEl.addEventListener("click", function (e) {
+        if (e.target.classList.contains("other-show-title")) {
+          const showId = e.target.dataset.showId;
+          getTvShowDetails(showId);
+        }
+      });
     }
   });
 };
@@ -221,7 +240,10 @@ const renderMoreDetailsElements = function (tv) {
                     alt="${tv.show?.name} poster">
             </div>
             <div class="tv-show-info">
-                <div class="info-title">🎬TV Show Information</div>
+                <div class="info-title">
+                  <div>🎬TV Show Information</div>
+                  <button class="close-btn">X</button>
+                </div>
                 <div class="name">Name: <span>${tv.show?.name}</span></div>
                 <div class="runtime">Runtime: <span>${
                   tv.show?.runtime || "Varies"
@@ -317,16 +339,64 @@ const trendingAndPopularTvShows = async function () {
   leftBtn.addEventListener("click", trending.leftBtnActions);
   rightBtn.addEventListener("click", trending.rightBtnActions);
 
-  // Listen for actor names clicked
+  // Listen for items being clicked
   const trendingTVEl = document.querySelector(".trendingTV");
-  trendingTVEl.addEventListener("click", function (e) {
+  trendingTVEl.addEventListener("click", async function (e) {
+    // Listen for actor names clicked
     if (e.target.classList.contains("trending-cast-name")) {
       const peopleId = e.target.dataset.castId;
       // Remove already existed elements
       removeSearchResultContent();
-      people.renderPeopleDetails(peopleId);
+
+      // Now rendered the actor's full information
+      await people.renderPeopleDetails(peopleId);
+      // Now we can listen for the actor's other tv shows being clicked
+      const otherShowTitlesEl = document.querySelector(
+        ".filmography-container"
+      );
+      otherShowTitlesEl.addEventListener("click", function (e) {
+        if (e.target.classList.contains("other-show-title")) {
+          const showId = e.target.dataset.showId;
+          getTvShowDetails(showId);
+        }
+      });
+    }
+
+    // Listen for tv shows getting clicked
+    if (e.target.classList.contains("front-image")) {
+      const showId = e.target.dataset.showId;
+      getTvShowDetails(showId);
     }
   });
+};
+
+// ---------------------------------------
+// Listen to close button
+const removeDetailsOnClose = function () {
+  const detailsCloseBtn = document.querySelector(".close-btn");
+  detailsCloseBtn.addEventListener("click", function () {
+    removeSearchResultContent();
+    currentInputVal = "";
+  });
+};
+// -----------------------------------------
+
+// To render tv show detail when click
+const getTvShowDetails = async function (showId) {
+  // Remove already existed elements in the result area
+  removeSearchResultContent();
+  // Now need to fetch tv show data based on the show id
+  const tv = await fetch.TVShowByCode(showId);
+  searchResultEl.insertAdjacentHTML(
+    "beforeend",
+    renderMoreDetailsElements({ show: tv.data })
+  );
+  // renderMoreDetailsElements expects data format of tv.show.key
+  // So rename tv.data.key to show.key
+
+  // To render the show cast info when clicked
+  showCastInTVShowDetails(showId);
+  removeDetailsOnClose();
 };
 
 const scaleTitleTextToFit = function () {
@@ -346,6 +416,7 @@ const scaleTitleTextToFit = function () {
   });
 };
 
+// Render the whole trending / popular section html element and return it
 const renderTrendingElements = function (trendingListOfTVToRender) {
   const trendingTVDivEl = document.createElement("div");
   trendingTVDivEl.classList = "trendingTV";
@@ -375,8 +446,8 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
                 : ""
             }">${i + 1}</div>
             <div class="trending-card-front">
-                <img class="front-image"
-                    src="${tv.showInfo.data.image.original}" alt="${
+                <img class="front-image" data-show-id='${tv.showInfo.data.id}'
+                src="${tv.showInfo.data.image.original}" alt="${
       tv.showInfo.data.name
     } poster">
                 <div class="trending-name">${tv.showInfo.data.name}</div>
@@ -463,5 +534,3 @@ const renderSliderRightBtnElements = function () {
   const html = `<button class="slider-button right-slider-btn"><i class="fas fa-chevron-right"></i></button>`;
   return html;
 };
-
-// await people.renderPeopleDetails("40099");

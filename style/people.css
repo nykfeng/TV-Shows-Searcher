@@ -22,7 +22,7 @@
   margin-bottom: 3rem;
 }
 
-.people-info-collapse-btn {
+.close-btn {
   width: 4rem;
   height: 4rem;
   border-radius: 0.5rem;
@@ -33,11 +33,11 @@
   cursor: pointer;
 }
 
-.people-info-collapse-btn:hover {
+.close-btn:hover {
   opacity: 0.5;
 }
 
-.people-info-collapse-btn:active {
+.close-btn:active {
   transform: scale(0.97);
 }
 
@@ -102,6 +102,11 @@
 .other-show-title {
   text-align: left;
   font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.other-show-title:hover {
+  color: var(--main-color);
 }
 
 .other-show-character-portrait-div {
