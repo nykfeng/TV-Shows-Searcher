@@ -375,6 +375,7 @@ Main more details content section
     align-self: flex-end;
   }
 
+  /* --------- more detail section ----------- */
   .more-details {
     display: flex;
     flex-direction: column;
@@ -386,11 +387,6 @@ Main more details content section
 
   .poster-image {
     width: 95%;
-  }
-
-  .info-title,
-  .details-title,
-  .cast-title-text {
   }
 
   .cast-title-dropdown {
@@ -455,5 +451,79 @@ Main more details content section
   .cast-list .cast-list-individual-box {
     display: flex;
     flex-direction: column;
+  }
+
+  /* Actor information and filmography section*/
+
+  .people-info-title-bar .people-info-title-text {
+    font-size: 2.5rem;
+  }
+
+  .people-information .people-info-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .people-info-details .people-info-details-box {
+    flex-direction: column;
+    align-items: center;
+  }
+  .people-info-text {
+    border: 0.3rem solid var(--secondary-gray-color);
+    border-radius: 2rem;
+    padding: 0.5rem;
+  }
+
+  .people-info-details-box .people-portrait {
+    max-height: 50rem;
+    max-width: 30rem;
+  }
+
+  .people-other-shows .other-shows-box {
+    flex-direction: column;
+  }
+
+  .other-shows-box .other-show-character-portrait-div {
+    padding-bottom: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 1025px) {
+  .title-a-tag {
+    font-size: 4.2rem;
+  }
+
+  .search-bar {
+    width: 60vw;
+  }
+
+  /* --------- more detail section ----------- */
+  .poster-image {
+    max-width: 50rem;
+    max-height: 80rem;
+  }
+
+  .tv-show-cast {
+    grid-column: 1 / -1;
+  }
+
+  .tv-show-cast-grid .cast-list {
+    gap: 2rem;
+  }
+
+  /* Trending and popular section at max 600 */
+  .main-display-content .trending-title {
+    font-size: 3.5rem;
+  }
+
+  /* Actor information and filmography section*/
+  .people-info-details-box .people-portrait {
+    max-height: 50rem;
+    max-width: 30rem;
+  }
+
+  .people-info-details .people-info-details-box {
+    flex-direction: column;
+    align-items: center;
   }
 }
