@@ -361,18 +361,67 @@ Main more details content section
   flex-direction: column;
 }
 
+/* ========================================================================
+media query for responsive devices
+========================================================================*/
+
+@media only screen and (max-width: 1025px) {
+  .title-a-tag {
+    font-size: 4.2rem;
+  }
+
+  .search-bar {
+    width: 60vw;
+  }
+
+  /* --------- more detail section ----------- */
+  .poster-image {
+    max-width: 50rem;
+    max-height: 80rem;
+  }
+
+  .tv-show-cast {
+    grid-column: 1 / -1;
+  }
+
+  .tv-show-cast-grid .cast-list {
+    gap: 2rem;
+  }
+
+  /* Trending and popular section at max 600 */
+  .main-display-content .trending-title {
+    font-size: 3.5rem;
+  }
+
+  /* Actor information and filmography section*/
+  .people-info-details-box .people-portrait {
+    max-height: 50rem;
+    max-width: 30rem;
+  }
+
+  .people-info-details .people-info-details-box {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   header {
     flex-direction: column;
     gap: 0;
+    padding: 1rem;
   }
 
-  .title-a-tag {
-    font-size: 3.3rem;
+  header .title-a-tag {
+    font-size: 3rem;
   }
   .credit {
     font-size: 1rem;
     align-self: flex-end;
+  }
+
+  .search-area .search-bar {
+    width: 90vw;
   }
 
   /* --------- more detail section ----------- */
@@ -397,7 +446,7 @@ Main more details content section
 
   /* Trending and popular section at max 600 */
   .main-display-content .trending-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .main-display-content .slider-button {
@@ -485,45 +534,5 @@ Main more details content section
 
   .other-shows-box .other-show-character-portrait-div {
     padding-bottom: 1.5rem;
-  }
-}
-
-@media only screen and (max-width: 1025px) {
-  .title-a-tag {
-    font-size: 4.2rem;
-  }
-
-  .search-bar {
-    width: 60vw;
-  }
-
-  /* --------- more detail section ----------- */
-  .poster-image {
-    max-width: 50rem;
-    max-height: 80rem;
-  }
-
-  .tv-show-cast {
-    grid-column: 1 / -1;
-  }
-
-  .tv-show-cast-grid .cast-list {
-    gap: 2rem;
-  }
-
-  /* Trending and popular section at max 600 */
-  .main-display-content .trending-title {
-    font-size: 3.5rem;
-  }
-
-  /* Actor information and filmography section*/
-  .people-info-details-box .people-portrait {
-    max-height: 50rem;
-    max-width: 30rem;
-  }
-
-  .people-info-details .people-info-details-box {
-    flex-direction: column;
-    align-items: center;
   }
 }
