@@ -446,7 +446,7 @@ media query for responsive devices
 
   /* Trending and popular section at max 600 */
   .main-display-content .trending-title {
-    font-size: 2rem;
+    font-size: 2.8rem;
   }
 
   .main-display-content .slider-button {
@@ -521,6 +521,7 @@ media query for responsive devices
     border: 0.3rem solid var(--secondary-gray-color);
     border-radius: 2rem;
     padding: 0.5rem;
+    width: 80vw;
   }
 
   .people-info-details-box .people-portrait {
