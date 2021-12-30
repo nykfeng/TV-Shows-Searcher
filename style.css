@@ -330,6 +330,7 @@ Main more details content section
 .cast-title {
   display: flex;
   justify-content: space-between;
+  padding: 0 0.3rem;
 }
 
 .cast-title-text {
@@ -338,8 +339,8 @@ Main more details content section
 }
 
 .cast-title-dropdown {
-  min-width: 5rem;
-  min-height: 5rem;
+  width: 5rem;
+  height: 5rem;
   background: none;
   padding: 0.5rem;
   border: none;
@@ -356,6 +357,103 @@ Main more details content section
 Main more details content section
 ========================================================================*/
 .main-display-content {
-  display: grid;
-  place-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .title-a-tag {
+    font-size: 3.3rem;
+  }
+  .credit {
+    font-size: 1rem;
+    align-self: flex-end;
+  }
+
+  .more-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 2em;
+  }
+  .summary-text {
+    font-size: 0.7em;
+  }
+
+  .poster-image {
+    width: 95%;
+  }
+
+  .info-title,
+  .details-title,
+  .cast-title-text {
+  }
+
+  .cast-title-dropdown {
+    font-size: 2.5rem;
+    width: 3.3rem;
+    height: 3.3rem;
+  }
+
+  /* Trending and popular section at max 600 */
+  .main-display-content .trending-title {
+    font-size: 2.5rem;
+  }
+
+  .main-display-content .slider-button {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+  }
+
+  .trending-card {
+    min-width: 22rem;
+    font-size: 1rem;
+  }
+
+  .front-image {
+    max-height: 30rem;
+  }
+
+  .trending-card-front .trending-name {
+    height: 3rem;
+    font-size: 3rem;
+    align-self: flex-start;
+  }
+
+  .trending-card:hover .trending-card-front {
+    transition: transform 500ms;
+    transform: translateY(-50%) scale(0.8);
+  }
+
+  .trending-card-back .trending-start-watching {
+    font-size: 1.8rem;
+    padding: 1rem;
+  }
+
+  .trending-cast-detail .trending-cast-name {
+    font-size: 2rem;
+  }
+
+  /* Cast dropdown section from tv show details */
+  .tv-show-cast .tv-show-cast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tv-show-cast-grid .cast-list {
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    border-bottom: 0.5rem solid var(--main-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .cast-list .cast-list-individual-box {
+    display: flex;
+    flex-direction: column;
+  }
 }

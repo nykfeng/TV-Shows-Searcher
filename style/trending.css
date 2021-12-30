@@ -85,12 +85,12 @@
     var(--secondary-color),
     var(--main-color)
   );
-  width: 100%;
+  width: 95vw;
   font-size: 5rem;
   color: #fff;
   letter-spacing: 0.3rem;
   margin: 0 auto;
-  padding: 0 3rem;
+  padding: 0 1rem;
 }
 
 .trending-card {
