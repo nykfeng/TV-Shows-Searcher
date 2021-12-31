@@ -71,7 +71,7 @@ const peopleInfoDetail = function (data) {
   }"
                         class="people-portrait">
                     <div class="people-info-text">
-                        <p class="people-info-text-title">Person Info</p>
+                        <p class="people-info-text-title">Personal Info</p>
                         <p class="people-name"><span>Name: </span>${
                           data.data.name
                         }</p>
@@ -82,10 +82,10 @@ const peopleInfoDetail = function (data) {
                           data.data.birthday
                         )}</p>
                         <p class="people-DOB"><span>Birthday: </span>${
-                          data.data.birthday
+                          data.data.birthday || "Unknown"
                         }</p>
                         <p class="people-nationality"><span>Nationality: </span>${
-                          data.data?.country?.name
+                          data.data?.country?.name || "Unknown"
                         }</p>
                     </div>
                 </div>
@@ -94,6 +94,7 @@ const peopleInfoDetail = function (data) {
 };
 
 const calculateAge = function (dob) {
+  if (!dob) return "Unknown";
   const birthday = new Date(dob);
   const today = new Date();
 
@@ -151,7 +152,6 @@ const getCharacterInfo = function (data, name) {
   // data will be _embedded.cast array
   let characterInfo = { characterName: "", characterPortraitUrl: "" };
   data.forEach((cast) => {
-    // console.log(cast);
     if (cast.person.name === name) {
       characterInfo.characterName = cast.character.name;
       characterInfo.characterPortraitUrl =

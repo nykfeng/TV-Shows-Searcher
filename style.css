@@ -364,8 +364,27 @@ Main more details content section
 /* ========================================================================
 media query for responsive devices
 ========================================================================*/
+@media only screen and (max-width: 1730px) {
+  .tv-show-cast {
+    grid-column: 1 / -1;
+  }
 
-@media only screen and (max-width: 1025px) {
+  .title-a-tag {
+    font-size: 5rem;
+  }
+
+  .main-display-content .trending-title {
+    font-size: 3.5rem;
+  }
+
+  .main-display-content .slider-button {
+    width: 5rem;
+    height: 5rem;
+    font-size: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
   .title-a-tag {
     font-size: 4.2rem;
   }
@@ -388,7 +407,6 @@ media query for responsive devices
     gap: 2rem;
   }
 
-  /* Trending and popular section at max 600 */
   .main-display-content .trending-title {
     font-size: 3.5rem;
   }
@@ -403,9 +421,23 @@ media query for responsive devices
     flex-direction: column;
     align-items: center;
   }
+
+  .main-display-content .slider-button {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.8rem;
+  }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
+  .more-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 2em;
+  }
+}
+
+@media only screen and (max-width: 770px) {
   header {
     flex-direction: column;
     gap: 0;
@@ -413,7 +445,7 @@ media query for responsive devices
   }
 
   header .title-a-tag {
-    font-size: 3rem;
+    font-size: 3.5rem;
   }
   .credit {
     font-size: 1rem;
@@ -468,11 +500,6 @@ media query for responsive devices
     height: 3rem;
     font-size: 3rem;
     align-self: flex-start;
-  }
-
-  .trending-card:hover .trending-card-front {
-    transition: transform 500ms;
-    transform: translateY(-50%) scale(0.8);
   }
 
   .trending-card-back .trending-start-watching {
@@ -535,5 +562,10 @@ media query for responsive devices
 
   .other-shows-box .other-show-character-portrait-div {
     padding-bottom: 1.5rem;
+  }
+
+  .external-links-div {
+    flex-wrap: wrap;
+    max-height: 10rem;
   }
 }

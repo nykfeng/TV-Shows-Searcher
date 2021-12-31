@@ -57,6 +57,7 @@
   max-height: 70rem;
   border-radius: 2rem;
   border: 0.3rem solid var(--secondary-gray-color);
+  box-shadow: 0.2rem 0.5rem 1.5rem black;
 }
 .people-info-text {
   font-size: 2rem;

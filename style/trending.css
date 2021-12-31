@@ -192,8 +192,6 @@ Front card
 Back card
 ========================================*/
 .trending-card-back {
-  /* display: none; */
-
   position: absolute;
   opacity: 0;
   bottom: 0;
