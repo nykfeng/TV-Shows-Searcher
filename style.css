@@ -52,6 +52,12 @@ header {
   max-height: 8vh;
 }
 
+.result-area,
+.main-display-content {
+  max-width: 225rem;
+  margin: 0 auto;
+}
+
 /* ========================================================================
 Search bar and dropdown content section
 ========================================================================*/
@@ -381,6 +387,13 @@ media query for responsive devices
     width: 5rem;
     height: 5rem;
     font-size: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .people-info-details .people-info-details-box {
+    flex-direction: column;
+    align-items: center;
   }
 }
 

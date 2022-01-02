@@ -85,7 +85,7 @@
     var(--secondary-color),
     var(--main-color)
   );
-  width: 95vw;
+  width: 95%;
   font-size: 5rem;
   color: #fff;
   letter-spacing: 0.3rem;
