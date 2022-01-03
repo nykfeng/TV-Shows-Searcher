@@ -1,3 +1,5 @@
+// import axios from "axios";
+
 const TVShows = async function (searchQuery) {
   const res = await fetch(
     `https://api.tvmaze.com/search/shows?q=${searchQuery}`
@@ -6,16 +8,22 @@ const TVShows = async function (searchQuery) {
   return data;
 };
 
-const trendingTV = async function () {
-  const url =
-    "https://cors-anywhere.herokuapp.com/https://www.tvmaze.com/shows";
-  const config = {
-    headers: { "Access-Control-Allow-Origin": "*" },
-  };
+// const trendingTV = async function () {
+//   const url =
+//     "https://cors-anywhere.herokuapp.com/https://www.tvmaze.com/shows";
+//   const config = {
+//     headers: { "Access-Control-Allow-Origin": "*" },
+//   };
 
-  const response = await axios.get(url, config);
-  const html = await response.data;
-  return html;
+//   const response = await axios.get(url, config);
+//   const html = await response.data;
+//   return html;
+// };
+
+const localServerTrending = async function () {
+  const res = await fetch(`./list.json`);
+  const data = await res.json();
+  return data;
 };
 
 const TVShowCast = async function (tvShowCode) {
@@ -48,9 +56,9 @@ const TVShowByCodeEmbeddedCast = async function (tvShowCode) {
 
 export default {
   TVShows,
-  trendingTV,
   TVShowByCode,
   TVShowCast,
   peopleByCode,
   TVShowByCodeEmbeddedCast,
+  localServerTrending,
 };

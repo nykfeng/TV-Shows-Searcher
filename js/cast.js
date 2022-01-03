@@ -18,15 +18,21 @@ const renderInDetails = async function (tvShowCode) {
       const html = `
     <div class="cast-list">
         <div class="cast-list-individual-box">
-        <img src="${data.character?.image?.medium}" alt="${data.character?.name}"
+        <img src="${data.character?.image?.medium}" alt="${
+        data.character?.name
+      }"
             class="portrait-in-show">
         <div class="cast-list-individual-details">
             <p class="character-name">${data.character?.name}</p>
             <div class="cast-name-div">
                 <span>by</span>
-                <p class="cast-name" data-cast-id="${data.person.id}"">${data.person.name}</p>
+                <p class="cast-name" data-cast-id="${data.person.id}"">${
+        data.person.name
+      }</p>
             </div>
-            <img src="${data.person.image?.medium}" alt="${data.person.name}"
+            <img src="${data.person?.image?.medium || ""}" alt="${
+        data.person.name
+      }"
                 class="portrait-real">
         </div>
         </div>

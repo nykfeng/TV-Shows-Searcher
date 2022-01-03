@@ -1,0 +1,26 @@
+{
+  "name": "tv-show-searcher",
+  "version": "1.0.0",
+  "description": "TV shows search app with autocompleter. Powered by TVmaze.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nykfeng/TV-Shows-Searcher.git"
+  },
+  "author": "Lifeng Huang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nykfeng/TV-Shows-Searcher/issues"
+  },
+  "homepage": "https://github.com/nykfeng/TV-Shows-Searcher#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.17.2"
+  }
+}

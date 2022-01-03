@@ -298,20 +298,11 @@ const renderMoreDetailsElements = function (tv) {
 
 // Grab trending list from non api source first, then render from api source
 const trendingAndPopularTvShows = async function () {
-  const trendingListCode = [];
-  const parser = new DOMParser();
-  // Reading from non API source then use DOMParser to read the info
-  const popularTVHtml = parser.parseFromString(
-    await fetch.trendingTV(),
-    "text/html"
-  );
-  const NUMBER_TRENDING = 15; // Want to show 15 trending/popular shows
+  // Get the list of trending / popular tv show codes from backend
+  const trendingListCode = await fetch.localServerTrending();
+  console.log(trendingListCode);
 
-  // Pulling the list from the website, non API
-  const tvNamesEl = popularTVHtml.querySelectorAll(".column-block");
-  tvNamesEl.forEach((tvEl) => {
-    trendingListCode.push(tvEl.getAttribute("data-key"));
-  });
+  const NUMBER_TRENDING = 10; // Want to show 10 trending/popular shows
 
   const TVShowFullInfo = []; // To store both show and cast info
 
@@ -324,7 +315,6 @@ const trendingAndPopularTvShows = async function () {
   }
 
   // Now we can render them
-  // console.log(TVShowFullInfo);
   const trendingEl = renderTrendingElements(TVShowFullInfo);
 
   mainDisplayEl.append(trendingEl);
