@@ -11,14 +11,23 @@ const indexPage = fs.readFileSync(`./index.html`, "utf-8");
 app.use(express.static("./"));
 
 app.get("/", (req, res) => {
-  console.log("Got your request and now rendering page");
+  console.log("Got a request and now sending page");
 
   res.send(indexPage);
 });
 
-app.get("/list.json", async (req, res) => {
+const upcomingTV = await getList.upcomingTV();
+
+app.get("/trendingList.json", async (req, res) => {
   const listData = await getList.trendingTV();
-  console.log("get the list from server side scraping");
+  console.log("Accessed trending TV from server side");
+
+  res.send(listData);
+});
+
+app.get("/upcomingList.json", async (req, res) => {
+  const listData = await getList.upcomingTV();
+  console.log("Accessed upcoming TV from server side");
 
   res.send(listData);
 });

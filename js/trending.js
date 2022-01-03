@@ -107,9 +107,147 @@ function calculateNumberOfTVShowCards() {
   return numberOfCardsToDisplay;
 }
 
+const scaleTitleTextToFit = function () {
+  const trendingNameEls = document.querySelectorAll(".trending-name");
+
+  trendingNameEls.forEach((titleEl) => {
+    if (titleEl.textContent.length > 16) {
+      titleEl.style.fontSize = "3rem";
+    }
+    if (titleEl.textContent.length > 21) {
+      titleEl.style.fontSize = "2.5rem";
+    }
+    if (titleEl.textContent.length >= 26) {
+      titleEl.textContent = titleEl.textContent.substring(0, 23) + "...";
+      titleEl.style.fontSize = "2rem";
+    }
+  });
+};
+
+const renderSliderLeftBtnElements = function () {
+  const html = `<button class="slider-button left-slider-btn"><i class="fas fa-chevron-left"></i></button>`;
+  return html;
+};
+
+const renderSliderRightBtnElements = function () {
+  const html = `<button class="slider-button right-slider-btn"><i class="fas fa-chevron-right"></i></button>`;
+  return html;
+};
+
+// Render the whole trending / popular section html element and return it
+const renderTrendingElements = function (trendingListOfTVToRender) {
+  const mainDisplayEl = document.querySelector(".main-display-content");
+
+  const trendingTVDivEl = document.createElement("div");
+  trendingTVDivEl.classList = "trendingTV";
+  const trendingTVDivTitleEl = document.createElement("div");
+  trendingTVDivTitleEl.classList = "trending-title";
+  trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
+
+  mainDisplayEl.append(trendingTVDivTitleEl);
+  trendingTVDivTitleEl.insertAdjacentHTML(
+    "afterend",
+    renderSliderLeftBtnElements()
+  );
+
+  trendingListOfTVToRender.forEach((tv, i) => {
+    const trendingCardEl = document.createElement("div");
+    trendingCardEl.classList = "trending-card";
+    trendingCardEl.classList.add(`slider-${i + 1}`);
+
+    const html = `
+            <div class="trending-rank ${
+              i === 0
+                ? "gold-rank"
+                : i === 1
+                ? "silver-rank"
+                : i === 2
+                ? "bronze-rank"
+                : ""
+            }">${i + 1}</div>
+            <div class="trending-card-front">
+                <img class="front-image" data-show-id='${tv.showInfo.data.id}'
+                src="${tv.showInfo.data.image.original}" alt="${
+      tv.showInfo.data.name
+    } poster">
+                <div class="trending-name">${tv.showInfo.data.name}</div>
+                <div class="bottom-info">
+                    <div class="trending-rating">
+                        <span>${tv.showInfo.data.rating.average}</span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="trending-cast">
+                        <img src="${tv.cast["0"].person.image.medium}" alt="${
+      tv.cast["0"].person.name
+    }"
+                            class="trending-cast-img">
+                        <img src="${tv.cast["1"].person.image.medium}" alt="${
+      tv.cast["1"].person.name
+    }"
+                            class="trending-cast-img">
+                        <img src="${tv.cast["2"].person.image.medium}" alt="${
+      tv.cast["2"].person.name
+    }"
+                            class="trending-cast-img">
+                    </div>
+                </div>
+            </div>
+            <div class="trending-card-back">
+                <a class="trending-start-watching" href="${
+                  tv.showInfo.data.officialSite
+                }">Start Watching</a>
+                <div class="trending-cast-more">
+                    <div class="trending-cast-detail">
+                        <img src="${tv.cast["0"].person.image.medium}" alt="${
+      tv.cast["0"].person.name
+    }"
+                            class="trending-cast-img">
+                        <p class="trending-cast-name" data-cast-id='${
+                          tv.cast["0"].person.id
+                        }'>${tv.cast["0"].person.name}</p>
+                    </div>
+                    <div class="trending-cast-detail">
+                        <img src="${tv.cast["1"].person.image.medium}" alt="${
+      tv.cast["1"].person.name
+    }"
+                            class="trending-cast-img">
+                        <p class="trending-cast-name" data-cast-id='${
+                          tv.cast["1"].person.id
+                        }'>${tv.cast["1"].person.name}</p>
+                    </div>
+                    <div class="trending-cast-detail">
+                        <img src="${tv.cast["2"].person.image.medium}" alt="${
+      tv.cast["2"].person.name
+    }"
+                            class="trending-cast-img">
+                        <p class="trending-cast-name" data-cast-id='${
+                          tv.cast["2"].person.id
+                        }'>${tv.cast["2"].person.name}</p>
+                    </div>
+                </div>
+            </div>
+      `;
+
+    trendingCardEl.insertAdjacentHTML("beforeend", html);
+    const trendingShowBackgroundDivEL = document.createElement("div");
+    trendingShowBackgroundDivEL.classList = "trending-card-background";
+    trendingShowBackgroundDivEL.style.backgroundImage = `url('${
+      tv.showInfo.data.image.original || ""
+    }')`;
+    trendingCardEl.append(trendingShowBackgroundDivEL);
+
+    trendingTVDivEl.append(trendingCardEl);
+  });
+  mainDisplayEl.insertAdjacentHTML("beforeend", renderSliderRightBtnElements());
+
+  return trendingTVDivEl;
+};
+
 export default {
   hideAllCards,
   resetCards,
   rightBtnActions,
   leftBtnActions,
+  scaleTitleTextToFit,
+  renderTrendingElements,
 };

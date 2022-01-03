@@ -21,7 +21,13 @@ const TVShows = async function (searchQuery) {
 // };
 
 const localServerTrending = async function () {
-  const res = await fetch(`./list.json`);
+  const res = await fetch(`./trendingList.json`);
+  const data = await res.json();
+  return data;
+};
+
+const localServerUpcoming = async function () {
+  const res = await fetch(`./upcomingList.json`);
   const data = await res.json();
   return data;
 };
@@ -61,4 +67,5 @@ export default {
   peopleByCode,
   TVShowByCodeEmbeddedCast,
   localServerTrending,
+  localServerUpcoming,
 };

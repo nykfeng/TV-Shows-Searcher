@@ -53,7 +53,8 @@
 }
 
 .people-portrait {
-  max-width: 50rem;
+  display: block;
+  max-width: 70rem;
   max-height: 70rem;
   border-radius: 2rem;
   border: 0.3rem solid var(--secondary-gray-color);

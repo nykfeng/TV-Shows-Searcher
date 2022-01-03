@@ -1,0 +1,136 @@
+:root {
+  font-size: 62.5%;
+  font-family: "Anton", sans-serif;
+
+  --primary-dark-color: #191a19;
+  --secondary-dark-color: #2e4c6d;
+  --main-color: #099e58;
+  --secondary-color: #16e7dd;
+  --green-price-color: #66f115;
+  --primary-gray-color: #f7f7f7;
+  --secondary-gray-color: #a09e9e;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  place-items: center center;
+  background-color: white;
+}
+
+.upcoming-cards {
+  margin-top: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.upcoming-card {
+  font-size: 2rem;
+  border-radius: 2rem;
+  /* background-color: white; */
+  padding: 1rem;
+  box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.45);
+  border: 5px solid var(--secondary-gray-color);
+  transition: transform 250ms ease-in-out;
+  position: relative;
+  background-size: cover;
+  /* opacity: 0.85; */
+
+  width: 30rem;
+  height: 45rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.upcoming-card:not(:first-child) {
+  margin-left: -7rem;
+}
+
+.upcoming-card:hover,
+.upcoming-card:focus-within {
+  transform-origin: bottom right;
+  transform: translateY(-3rem);
+  /* transform: translate(-100%, 50%) rotate(45deg) translate(100%, -50%); */
+  /* transform: rotate(10deg); */
+}
+
+.upcoming-card:hover ~ .upcoming-card,
+.upcoming-card:focus-within ~ .upcoming-card {
+  transform: translateX(8rem);
+  /* transform-origin: bottom right; */
+}
+
+.upcoming-date {
+  max-width: 35%;
+  background-color: white;
+  text-align: center;
+  border-radius: 1rem;
+  overflow: hidden;
+  letter-spacing: 0.5rem;
+}
+
+.upcoming-date__month {
+  background-color: var(--secondary-color);
+  font-size: 2.8rem;
+  padding: 0.2rem 0;
+  font-weight: bold;
+}
+
+.upcoming-date__day {
+  padding: 0.2rem 0;
+}
+
+.upcoming-date__time {
+  padding: 0.3rem 0;
+  background-color: var(--secondary-gray-color);
+  color: white;
+  /* border-top: 0.2rem solid var(--secondary-gray-color); */
+  font-weight: bold;
+}
+
+.upcoming-show-content {
+  /* background-color: rgb(255, 255, 255); */
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+  border-radius: 1rem;
+}
+
+.upcoming-show-name,
+.upcoming-episode-name,
+.upcoming-network {
+  padding: 0.5rem;
+  color: #fff;
+}
+
+.upcoming-show-name {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.upcoming-show-name a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.upcoming-show-name a:focus,
+.upcoming-show-name a:active,
+.upcoming-show-name a:visited {
+  color: #fff;
+}
+
+.upcoming-episode-name {
+  font-size: 1.8rem;
+}
+
+.upcoming-network {
+  font-size: 1.5rem;
+  text-align: right;
+}
