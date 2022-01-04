@@ -15,8 +15,11 @@ const renderMoreDetailsElements = function (tv) {
                     <button class="close-btn">X</button>
                   </div>
                   <div class="name">Name: <span>${tv.show?.name}</span></div>
+                  <div class="genre">Genres: <span>${
+                    tv.show?.genres.join(", ") || "Various"
+                  }</span></div>
                   <div class="runtime">Runtime: <span>${
-                    tv.show?.runtime || "Varies"
+                    tv.show?.runtime || "Various"
                   }</span></div>
                   <div class="premiered">Premiered on: <span>${
                     tv.show?.premiered || "Unknown"
@@ -34,13 +37,17 @@ const renderMoreDetailsElements = function (tv) {
               <div class="tv-show-details">
                   <div class="details-title">🎬Details</div>
                   <div class="country">Country: <span>${
-                    tv.show?.network?.country?.name || "Varies"
+                    tv.show?.network?.country?.name ||
+                    tv.show?.webChannel?.country?.name ||
+                    "Various"
                   }</span></div>
                   <div class="language">Language: <span>${
                     tv.show?.language || "Unknown"
                   }</span></div>
                   <div class="network">Network: <span>${
-                    tv.show?.network?.name || "Varies"
+                    tv.show?.network?.name ||
+                    tv.show?.webChannel?.name ||
+                    "Various"
                   }</span></div>
                   <div class="summary">Summary: <span class=summary-text>${
                     tv.show?.summary || ""

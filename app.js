@@ -330,7 +330,11 @@ const getTvShowDetails = async function (showId) {
   // To render the show cast info when clicked
   showCastInTVShowDetails(showId);
   removeDetailsOnClose();
-  window.scrollTo(0, 0);
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
 };
 
 trendingAndPopularTvShows();
