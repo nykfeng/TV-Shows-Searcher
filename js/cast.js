@@ -18,9 +18,9 @@ const renderInDetails = async function (tvShowCode) {
       const html = `
     <div class="cast-list">
         <div class="cast-list-individual-box">
-        <img src="${data.character?.image?.medium}" alt="${
-        data.character?.name
-      }"
+        <img src="${
+          data.character?.image?.medium || data.person?.image?.medium || ""
+        }" alt="${data.character?.name}"
             class="portrait-in-show">
         <div class="cast-list-individual-details">
             <p class="character-name">${data.character?.name}</p>

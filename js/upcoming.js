@@ -12,17 +12,16 @@ const renderUpcomingElements = function (upcomingTVList) {
   upcomingCardsEl.classList = "upcoming-cards";
   upcomingTVContentEl.append(upcomingCardsEl);
 
-  // Set it to 10 on main page, more can be seen with "See More"
-  const NUMBER_OF_UPCOMING_TV = 10;
+  // Set it to 8 on main page, more can be seen with "See More"
+  const NUMBER_OF_UPCOMING_TV = 8;
 
   // Loop through the upcoming tv list
   upcomingTVList.forEach((tv, i) => {
     if (i < NUMBER_OF_UPCOMING_TV) {
-      console.log(tv.imageLink);
       const html = `
       <div class="upcoming-card" data-show-id="${
         tv.showId
-      }" style="background-image: url(${tv.imageLink});">
+      }" style="background-image: url(${imageStringProcessor(tv.imageLink)});">
         <div class="upcoming-date">
           <div class="upcoming-date__date">
               <div class="upcoming-date__month">
@@ -36,10 +35,9 @@ const renderUpcomingElements = function (upcomingTVList) {
           <div class="upcoming-date__time">${tv.showTime}</div>
       </div>
       <div class="upcoming-show-content">
-          <div class="upcoming-show-name"><a href="#">${tv.showName}</a></div>
+          <div class="upcoming-show-name">${tv.showName}</div>
           <div class="upcoming-episode-name">-${tv.episodeName}</div>
           <div class="upcoming-network">
-              <span>by</span>
               ${tv.networkName}
           </div>
       </div>
@@ -49,6 +47,9 @@ const renderUpcomingElements = function (upcomingTVList) {
       upcomingCardsEl.insertAdjacentHTML("beforeend", html);
     }
   });
+
+  // Display the number of upcoming tv show cards based on view port width
+  displayUpcomingCards();
 };
 
 const dateStringProcessor = function (dateStr) {
@@ -57,6 +58,63 @@ const dateStringProcessor = function (dateStr) {
   const day = dateStr.substring(dateStr.indexOf(" "), dateStr.length);
   return { month, day };
 };
+
+const imageStringProcessor = function (imageLink) {
+  return (
+    imageLink.replace("medium_portrait", "original_untouched") ||
+    imageLink ||
+    ""
+  );
+};
+
+const calculateNumberOfUpcomingCards = function () {
+  const windowWidth = window.innerWidth;
+  let numberOfCardsToDisplay = 1; //Default it to 1
+  if (windowWidth <= 600) {
+    numberOfCardsToDisplay = 1;
+  } else if (windowWidth > 600 && windowWidth <= 900) {
+    numberOfCardsToDisplay = 2;
+  } else if (windowWidth > 900 && windowWidth <= 1100) {
+    numberOfCardsToDisplay = 3;
+  } else if (windowWidth > 1100 && windowWidth <= 1500) {
+    numberOfCardsToDisplay = 4;
+  } else if (windowWidth > 1500 && windowWidth <= 1800) {
+    numberOfCardsToDisplay = 5;
+  } else if (windowWidth > 1800 && windowWidth <= 2100) {
+    numberOfCardsToDisplay = 6;
+  } else {
+    numberOfCardsToDisplay = 8;
+  }
+
+  return numberOfCardsToDisplay;
+};
+
+const hideAllUpcomingCards = function () {
+  const allUpcomingCards = document.querySelectorAll(".upcoming-card");
+  allUpcomingCards.forEach((card) => {
+    if (!card.classList.contains("hide-it")) {
+      card.style.display = "none";
+    }
+  });
+};
+
+const UnhideCards = function (numberOfCards) {
+  const allUpcomingCards = document.querySelectorAll(".upcoming-card");
+  allUpcomingCards.forEach((card, i) => {
+    if (i < numberOfCards) {
+      card.style.display = "flex";
+    }
+  });
+};
+
+const displayUpcomingCards = function () {
+  hideAllUpcomingCards();
+  const numberToDisplay = calculateNumberOfUpcomingCards();
+  UnhideCards(numberToDisplay);
+};
+
+// Adjust the number of upcoming tv show cards to display based on the size of the screen
+window.addEventListener("resize", displayUpcomingCards);
 
 export default {
   renderUpcomingElements,

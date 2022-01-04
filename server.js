@@ -11,12 +11,10 @@ const indexPage = fs.readFileSync(`./index.html`, "utf-8");
 app.use(express.static("./"));
 
 app.get("/", (req, res) => {
-  console.log("Got a request and now sending page");
+  console.log("Got a request! Now sending the index page.");
 
   res.send(indexPage);
 });
-
-const upcomingTV = await getList.upcomingTV();
 
 app.get("/trendingList.json", async (req, res) => {
   const listData = await getList.trendingTV();

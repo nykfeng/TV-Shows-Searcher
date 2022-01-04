@@ -330,14 +330,24 @@ const getTvShowDetails = async function (showId) {
   // To render the show cast info when clicked
   showCastInTVShowDetails(showId);
   removeDetailsOnClose();
+  window.scrollTo(0, 0);
 };
 
 trendingAndPopularTvShows();
 
 const upcomingTVShows = async function () {
   const upcomingTVList = await fetch.localServerUpcoming();
-  console.log(upcomingTVList);
   upcoming.renderUpcomingElements(upcomingTVList);
+
+  // Listen for click event for the upcoming tv show
+
+  const upcomingTvShowSectionEl = document.querySelector(".upcoming-cards");
+  upcomingTvShowSectionEl.addEventListener("click", function (e) {
+    if (e.target.closest(".upcoming-card")) {
+      const tvShowId = e.target.closest(".upcoming-card").dataset.showId;
+      getTvShowDetails(tvShowId);
+    }
+  });
 };
 
 upcomingTVShows();

@@ -49,6 +49,8 @@ const renderPeopleDetails = async function (castId) {
   closePeopleDetailsBtn.addEventListener("click", function () {
     peopleSectionEl.remove();
   });
+
+  window.scrollTo(0, 0);
 };
 
 const peopleHeaderTitleElement = function () {

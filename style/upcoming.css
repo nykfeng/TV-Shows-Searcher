@@ -19,14 +19,30 @@
   box-sizing: border-box;
 }
 
-body {
-  display: grid;
-  place-items: center center;
-  background-color: white;
+.upcoming-tv-title {
+  background-image: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--main-color)
+  );
+  width: 95vw;
+  max-width: 250rem;
+  font-size: 5rem;
+  color: #fff;
+  letter-spacing: 0.3rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.upcoming-tv-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .upcoming-cards {
-  margin-top: 10rem;
+  margin: 8rem auto;
   display: flex;
   flex-wrap: wrap;
 }
@@ -34,14 +50,13 @@ body {
 .upcoming-card {
   font-size: 2rem;
   border-radius: 2rem;
-  /* background-color: white; */
-  padding: 1rem;
   box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.45);
-  border: 5px solid var(--secondary-gray-color);
+  border: 0.3rem solid var(--secondary-gray-color);
   transition: transform 250ms ease-in-out;
   position: relative;
   background-size: cover;
-  /* opacity: 0.85; */
+  overflow: hidden;
+  cursor: pointer;
 
   width: 30rem;
   height: 45rem;
@@ -70,12 +85,15 @@ body {
 }
 
 .upcoming-date {
-  max-width: 35%;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-family: "Roboto", sans-serif;
+  max-width: 30%;
   background-color: white;
   text-align: center;
   border-radius: 1rem;
   overflow: hidden;
-  letter-spacing: 0.5rem;
+  box-shadow: 0.5rem 0.5rem 1rem black;
 }
 
 .upcoming-date__month {
@@ -99,8 +117,7 @@ body {
 
 .upcoming-show-content {
   /* background-color: rgb(255, 255, 255); */
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
-  border-radius: 1rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7));
 }
 
 .upcoming-show-name,
@@ -115,22 +132,19 @@ body {
   color: #fff;
 }
 
-.upcoming-show-name a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.upcoming-show-name a:focus,
-.upcoming-show-name a:active,
-.upcoming-show-name a:visited {
-  color: #fff;
+.upcoming-show-name:hover {
+  color: var(--main-color);
 }
 
 .upcoming-episode-name {
   font-size: 1.8rem;
+  font-family: "Roboto", sans-serif;
 }
 
 .upcoming-network {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   text-align: right;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  letter-spacing: 0.2rem;
 }

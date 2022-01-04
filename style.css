@@ -31,6 +31,13 @@ header {
   gap: 2rem;
 }
 
+.result-area,
+.main-display-content,
+.upcoming-tv-content {
+  max-width: 250rem;
+  margin: 0 auto;
+}
+
 .title {
   font-size: 3vw;
 
@@ -237,12 +244,12 @@ Main more details content section
 .more-details {
   background-color: var(--primary-gray-color);
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto auto;
   grid-template-rows: auto auto 1fr auto;
   font-size: 3rem;
   column-gap: 3rem;
   row-gap: 1rem;
-  min-width: 70vw;
+  min-width: 70%;
 }
 
 .more-details span {
@@ -250,12 +257,22 @@ Main more details content section
 }
 
 .poster {
+  max-width: 100%;
+  min-width: 45rem;
   grid-row: 1/-1;
 }
 
 .poster-image {
   max-height: 70vh;
+  width: 100%;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.8);
+}
+
+.tv-show-info,
+.tv-show-details,
+.external-link-div,
+.tv-show-cast {
+  max-width: 180rem;
 }
 
 .summary-text {
@@ -373,7 +390,8 @@ media query for responsive devices
     font-size: 5rem;
   }
 
-  .main-display-content .trending-title {
+  .main-display-content .trending-title,
+  .upcoming-tv-content .upcoming-tv-title {
     font-size: 3.5rem;
   }
 
@@ -415,7 +433,8 @@ media query for responsive devices
     gap: 2rem;
   }
 
-  .main-display-content .trending-title {
+  .main-display-content .trending-title,
+  .upcoming-tv-content .upcoming-tv-title {
     font-size: 3.5rem;
   }
 
@@ -485,7 +504,8 @@ media query for responsive devices
   }
 
   /* Trending and popular section at max 600 */
-  .main-display-content .trending-title {
+  .main-display-content .trending-title,
+  .upcoming-tv-content .upcoming-tv-title {
     font-size: 2.8rem;
   }
 
@@ -575,5 +595,11 @@ media query for responsive devices
   .external-links-div {
     flex-wrap: wrap;
     max-height: 10rem;
+  }
+
+  .upcoming-cards .upcoming-card {
+    /* width: 25rem;
+    height: 38rem; */
+    transform: scale(0.85);
   }
 }

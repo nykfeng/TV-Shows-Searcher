@@ -86,6 +86,7 @@
     var(--main-color)
   );
   width: 95vw;
+  max-width: 250rem;
   font-size: 5rem;
   color: #fff;
   letter-spacing: 0.3rem;

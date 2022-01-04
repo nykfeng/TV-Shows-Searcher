@@ -18,9 +18,9 @@ const hideAllCards = function () {
 };
 
 const hideAndUnhideCards = function (numberOfCards, startIndex) {
-  for (let i = startIndex; i < startIndex + numberOfCards; i++) {
-    allCards[i];
-  }
+  // for (let i = startIndex; i < startIndex + numberOfCards; i++) {
+  //   allCards[i];
+  // }
   const endIndex = startIndex + numberOfCards;
   allCards.forEach((card) => {
     if (startIndex < endIndex) {
