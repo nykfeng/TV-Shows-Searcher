@@ -232,6 +232,9 @@ document.querySelector("body").addEventListener("click", function (e) {
 
 // Grab trending list from backend (non api source) first, then render from api source
 const trendingAndPopularTvShows = async function () {
+  // Before any fetching requests were made, creat the skeleton content placeholder elements
+  trending.renderPlaceholderElements();
+
   // Get the list of trending / popular tv show codes from backend
   const trendingListCode = await fetch.localServerTrending();
 

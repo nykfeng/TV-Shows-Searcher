@@ -317,3 +317,47 @@ Whole card hover
 .trending-card:hover .trending-name {
   opacity: 0;
 }
+
+/* ====================================
+content placeholder 
+========================================*/
+
+.trending-card-placeholder-section {
+  display: flex;
+}
+
+.content-placeholder-img {
+  display: inline-block;
+  width: 28rem;
+  height: 38rem;
+  margin-bottom: 1rem;
+}
+
+.content-placeholder-text {
+  font-size: 3rem;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.animated-bg {
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 10%,
+    #edeef1 20%,
+    #f6f7f8 100%
+  );
+  background-size: 200% 100%;
+  animation: bgMoving 1100ms linear infinite;
+  border-radius: 2rem;
+}
+
+@keyframes bgMoving {
+  0% {
+    background-position: 50% 0;
+  }
+  100% {
+    background-position: -150% 0;
+  }
+}

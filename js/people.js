@@ -123,7 +123,7 @@ const otherFilmography = async function (data, name) {
   } (${calculatePremierYear(showInfo.data.premiered)})</div>
       </div>
       <div class="other-show-character-portrait-div">
-          <div><span>As</span> <span class="other-show-character-name">${
+          <div class="other-show-character-name-div"><span>As</span> <span class="other-show-character-name">${
             characterInfo.characterName
           }</span>
           </div>

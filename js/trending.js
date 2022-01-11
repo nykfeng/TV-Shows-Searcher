@@ -134,21 +134,77 @@ const renderSliderRightBtnElements = function () {
   return html;
 };
 
-// Render the whole trending / popular section html element and return it
-const renderTrendingElements = function (trendingListOfTVToRender) {
+// Create trending / popular section content placeholder html
+const renderPlaceholderElements = function () {
   const mainDisplayEl = document.querySelector(".main-display-content");
 
+  // create the div element to hold all of trending tv
   const trendingTVDivEl = document.createElement("div");
   trendingTVDivEl.classList = "trendingTV";
+
+  // create the section title element
   const trendingTVDivTitleEl = document.createElement("div");
   trendingTVDivTitleEl.classList = "trending-title";
   trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
-
   mainDisplayEl.append(trendingTVDivTitleEl);
+
+  // render the left slider button
   trendingTVDivTitleEl.insertAdjacentHTML(
     "afterend",
     renderSliderLeftBtnElements()
   );
+  mainDisplayEl.insertAdjacentHTML("beforeend", renderSliderRightBtnElements());
+
+  mainDisplayEl.append(trendingTVDivEl);
+  // create the div element to hold placeholder content
+  const trendingTVPlaceholderEl = document.createElement("div");
+  trendingTVPlaceholderEl.classList = "trending-card-placeholder-section";
+  trendingTVDivEl.append(trendingTVPlaceholderEl);
+
+  const numberOfCards = calculateNumberOfTVShowCards();
+  for (let i = 0; i < numberOfCards; i++) {
+    trendingTVPlaceholderEl.insertAdjacentHTML(
+      "beforeend",
+      tvshowCardPlaceholderHtml()
+    );
+  }
+};
+
+// Create trending tv show card placeholder elements
+const tvshowCardPlaceholderHtml = function () {
+  const html = `
+    <div class="trending-card">
+      <div class="content-placeholder-img animated-bg">&nbsp;</div>
+      <div class="content-placeholder-text animated-bg">&nbsp;</div>
+      <div class="content-placeholder-text animated-bg">&nbsp;</div>
+    </div>
+  `;
+  return html;
+};
+
+// Render the whole trending / popular section html element and return it
+const renderTrendingElements = function (trendingListOfTVToRender) {
+  // const mainDisplayEl = document.querySelector(".main-display-content");
+
+  // const trendingTVDivEl = document.createElement("div");
+  // trendingTVDivEl.classList = "trendingTV";
+  // const trendingTVDivTitleEl = document.createElement("div");
+  // trendingTVDivTitleEl.classList = "trending-title";
+  // trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
+
+  // mainDisplayEl.append(trendingTVDivTitleEl);
+  // trendingTVDivTitleEl.insertAdjacentHTML(
+  //   "afterend",
+  //   renderSliderLeftBtnElements()
+  // );
+
+  const trendingTVDivEl = document.querySelector(".trendingTV");
+
+  // remove the placeholder content
+  const trendingTVPlaceholderContentEl = document.querySelector(
+    ".trending-card-placeholder-section"
+  );
+  trendingTVPlaceholderContentEl.remove();
 
   trendingListOfTVToRender.forEach((tv, i) => {
     const trendingCardEl = document.createElement("div");
@@ -238,7 +294,7 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
 
     trendingTVDivEl.append(trendingCardEl);
   });
-  mainDisplayEl.insertAdjacentHTML("beforeend", renderSliderRightBtnElements());
+  // mainDisplayEl.insertAdjacentHTML("beforeend", renderSliderRightBtnElements());
 
   return trendingTVDivEl;
 };
@@ -250,4 +306,5 @@ export default {
   leftBtnActions,
   scaleTitleTextToFit,
   renderTrendingElements,
+  renderPlaceholderElements,
 };
