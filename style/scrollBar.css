@@ -1,0 +1,23 @@
+@import "style.css";
+
+::-webkit-scrollbar {
+  width: 2.5em;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(
+    to top,
+    var(--secondary-color),
+    var(--main-color)
+  );
+  border: 0.25em solid var(--primary-gray-color);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 0.7;
+}
