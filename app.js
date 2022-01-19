@@ -244,9 +244,12 @@ const trendingAndPopularTvShows = async function () {
   const TVShowFullInfo = []; // To store both show and cast info
 
   const seeMoreBtn = document.querySelector(".trending-title-expand");
-  seeMoreBtn.addEventListener("click", function () {
+  seeMoreBtn.addEventListener("click", async function () {
     trendingSeeMore.expandBtn(trendingListCode);
   });
+  // Will listen to another page for a total of 60 trending shows
+  const moreTrendingListCode = await fetch.localServerTrending("?page=2");
+  trendingListCode.push(...moreTrendingListCode);
 
   // need to listen for window scroll event to make another call to get trending
   // const moreTrendingListCode = await fetch.localServerTrending('?page=2');

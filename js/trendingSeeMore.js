@@ -3,54 +3,69 @@ import trending from "./trending.js";
 
 // Sentinel for expand collpase button
 let expanded = false;
+// number of total list to render after user scroll
+// maximum will be 10 lists, a total of 60 trending tv shows
+let listRendered = 0;
 
 const renderItemHtml = function (tv, i) {
   const html = `
-    <div class="trending-see-more__show-item">
     <div class="trending-see-more__show-poster-container">
-        <img src="https://static.tvmaze.com/uploads/images/original_untouched/241/602832.jpg" alt=""
+        <img src="${tv.image.original}" alt="${tv.name} poster"
             class="trending-see-more-poster-img">
     </div>
     <div class="trending-see-more__content">
 
-        <div class="trending-see-more__show-title">Westworld</div>
-        <div class="trending-see-more__show-rank trending-rank">1</div>
+        <div class="trending-see-more__show-title">${tv.name}</div>
+        <div class="trending-see-more__show-rank ${
+          i === 0
+            ? "gold-rank"
+            : i === 1
+            ? "silver-rank"
+            : i === 2
+            ? "bronze-rank"
+            : ""
+        }">${i + 1}</div>
 
         <div class="trending-see-more__show-content">
             <div class="trending-see-more__show-mid-container">
 
-                <div class="trending-see-more__show-genre">Drama, Science-Fiction, Western</div>
+                <div class="trending-see-more__show-genre">${
+                  tv.genres.join(", ") || "Various"
+                }</div>
                 <div class="trending-see-more__show-score">
                     <div class="stars-outer">
-                        <div class="stars-inner"></div>
+                        <div class="stars-inner" style="width:${
+                          parseFloat(tv.rating.average) * 10
+                        }%;"></div>
                     </div>
-                    <div class="show-score-number">8.7</div>
+                    <div class="show-score-number">${tv.rating.average}</div>
                 </div>
-                <div class="trending-see-more__show-network">HBO</div>
-                <div class="trending-see-more__show-summary">
-                    <p><b>Westworld</b> is a dark odyssey about the dawn of artificial consciousness and the
-                        evolution
-                        of sin. Set at the intersection of the near future and the reimagined past, it explores
-                        a
-                        world
-                        in which every human appetite, no matter how noble or depraved, can be indulged.</p>
+                <div class="trending-see-more__show-network"><b>${
+                  tv.network ? tv.network.name : tv.webChannel.name
+                }</b></div>
+                <div class="trending-see-more__show-summary">${tv.summary}
+                   
                 </div>
                 <div class="watch-options">
                     <div class="trailer-option">
-                        <button class="trailer-option-btn">Youtube</button>
+                        <a class="trailer-option-btn" href="${youtubeTrailerUrlQuery(
+                          tv.name
+                        )}">Youtube</a>
                     </div>
                     <div class="watch-now-option">
-                        <button class="watch-now-option-btn">Watch Now</button>
+                        <a class="watch-now-option-btn" href="${
+                          tv.officialSite
+                        }">Watch Now</a>
                     </div>
                 </div>
             </div>
 
             <div class="trending-see-more__show-end-container">
-                ${renderCastHtml(tv._embeddedCast)}
+                ${renderCastHtml(tv._embedded.cast)}
             </div>
         </div>
     </div>
-</div>
+
     
     `;
   return html;
@@ -58,20 +73,29 @@ const renderItemHtml = function (tv, i) {
 
 const renderCastHtml = function (tvCast) {
   if (tvCast.lenght === 0) return;
-  let html;
+  let html = "";
 
   // Only want to render at max 8 cast people here
   const numberToRender = tvCast.length < 8 ? tvCast.length : 8;
   for (let i = 0; i < numberToRender; i++) {
-    html += `
+    if (tvCast[i].person.image) {
+      html += `
         <div class="trending-cast-detail">
-            <img src="https://static.tvmaze.com/uploads/images/medium_portrait/162/406769.jpg"
+            <img src="${tvCast[i].person?.image.medium}"
                 alt="tv cast image" class="trending-cast-img">
-                <p class="trending-cast-name" data-cast-id="533">${23}</p>
+                <p class="trending-cast-name" data-cast-id="533">${tvCast[i].person.name}</p>
         </div>
      `;
+    }
   }
   return html;
+};
+
+// helper function for youtube url
+// https://www.youtube.com/results?search_query=the+expanse+trailer
+const youtubeTrailerUrlQuery = function (showName) {
+  showName = showName.replace(/\s/g, "+");
+  return `https://www.youtube.com/results?search_query=${showName}+trailer`;
 };
 
 const renderingTrendingSeeMore = function () {
@@ -108,21 +132,30 @@ const renderContent = function (tvShowCodeList) {
 
   // appending the whole see more section
   trendingTVBlockEl.append(seeMoreDivEl);
-  renderIndividualItem(tvShowCodeList, seeMoreDivEl);
+  renderIndividualItem(tvShowCodeList, seeMoreDivEl, listRendered);
+  listRendered++;
 };
 
 // individual item render
-const renderIndividualItem = function (tvShowCodeList, seeMoreDivEl) {
-  for (let i = 0; i < tvShowCodeList.length; i++) {
+const renderIndividualItem = function (
+  tvShowCodeList,
+  seeMoreDivEl,
+  listRendered
+) {
+  // this will fetch 6 tv shows each time
+  const indexToFetch = listRendered * 6;
+  console.log("listRendered", listRendered);
+  console.log("indexToFetch", indexToFetch);
+  for (let i = indexToFetch; i < indexToFetch + 6; i++) {
     const seeMoreItemEl = document.createElement("div");
     seeMoreItemEl.classList = "trending-see-more__show-item";
     seeMoreDivEl.append(seeMoreItemEl);
     seeMoreItemEl.insertAdjacentHTML("beforeend", contentLoaderHtml());
-    // const tvShowDetailData = fetch.TVShowByCodeEmbeddedCast(tvShowCodeList[i]);
-    // tvShowDetailData.then((data) => {
-    //   console.log(data);
-    //   // itemEl.innerHTML = renderItemHtml(data);
-    // });
+    const tvShowDetailData = fetch.TVShowByCodeEmbeddedCast(tvShowCodeList[i]);
+    tvShowDetailData.then((tvShow) => {
+      console.log(tvShow.data);
+      seeMoreItemEl.innerHTML = renderItemHtml(tvShow.data, i);
+    });
   }
 };
 

@@ -141,19 +141,19 @@
 }
 
 .gold-rank {
-  background-color: var(--gold-color);
+  background-color: var(--gold-color) !important;
   opacity: 0.8;
   color: #fff;
 }
 
 .silver-rank {
-  background-color: var(--silver-color);
+  background-color: var(--silver-color) !important;
   opacity: 0.8;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.8) !important;
 }
 
 .bronze-rank {
-  background-color: var(--bronze-color);
+  background-color: var(--bronze-color) !important;
   opacity: 0.8;
 }
 
