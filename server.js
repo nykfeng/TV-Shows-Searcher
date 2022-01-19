@@ -23,6 +23,13 @@ app.get("/trendingList.json", async (req, res) => {
   res.send(listData);
 });
 
+app.get("/moreTrendingList.json", async (req, res) => {
+  const listData = await getList.trendingTV('?page=2');
+  console.log("Accessed more trending TV from server side");
+
+  res.send(listData);
+});
+
 app.get("/upcomingList.json", async (req, res) => {
   const listData = await getList.upcomingTV();
   console.log("Accessed upcoming TV from server side");

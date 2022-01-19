@@ -4,6 +4,7 @@ import cast from "./js/cast.js";
 import people from "./js/people.js";
 import details from "./js/showDetails.js";
 import upcoming from "./js/upcoming.js";
+import trendingSeeMore from "./js/trendingSeeMore.js";
 
 const inputEl = document.querySelector(".input-bar");
 const resultListEl = document.querySelector(".result-list");
@@ -168,7 +169,7 @@ const showCastInTVShowDetails = function (showID) {
   dropdownBtn.addEventListener("click", function () {
     let castGridEl = document.querySelector(".tv-show-cast-grid");
     if (!expanded) {
-      // If the cast grid info has not set generated
+      // If the cast grid info has not yet generated
       if (!castGridEl) {
         cast.renderInDetails(showID);
         openCastInfoInShowDetails();
@@ -238,9 +239,17 @@ const trendingAndPopularTvShows = async function () {
   // Get the list of trending / popular tv show codes from backend
   const trendingListCode = await fetch.localServerTrending();
 
-  const NUMBER_TRENDING = 15; // Want to show 10 trending/popular shows
+  const NUMBER_TRENDING = 15; // Want to show 15 trending/popular shows
 
   const TVShowFullInfo = []; // To store both show and cast info
+
+  const seeMoreBtn = document.querySelector(".trending-title-expand");
+  seeMoreBtn.addEventListener("click", function () {
+    trendingSeeMore.expandBtn(trendingListCode);
+  });
+
+  // need to listen for window scroll event to make another call to get trending
+  // const moreTrendingListCode = await fetch.localServerTrending('?page=2');
 
   // Now make API calls to get tv show info and cast info
   for (let i = 0; i < NUMBER_TRENDING; i++) {
@@ -268,6 +277,32 @@ const trendingAndPopularTvShows = async function () {
 
   // Manage the cards for the slider here
   trending.resetCards();
+
+  // Manage trending see more option
+  // const seeMoreOption = function() {
+  //   let seeMoreDivEl = document.querySelector(".trending-see-more");
+  //   let expanded = false;
+  //   if (!expanded) {
+  //     // If the see more trending tv element has not yet generated
+  //     if (!seeMoreDivEl) {
+  //       trendingSeeMore.renderContent(showID);
+  //       openCastInfoInShowDetails();
+  //       expanded = true;
+  //       dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
+  //     } else {
+  //       // cast info is there, so no need to generate again, set display
+  //       seeMoreDivEl.style.display = "grid";
+  //       expanded = true;
+  //       dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
+  //     }
+  //   } else {
+  //     // cast info is there set display to none to hide
+  //     seeMoreDivEl = document.querySelector(".trending-see-more");
+  //     seeMoreDivEl.style.display = "none";
+  //     expanded = false;
+  //     dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-down">`;
+  //   }
+  // }
 
   // Listen for buttons after they are rendered
   const leftBtn = document.querySelector(".left-slider-btn");

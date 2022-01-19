@@ -20,10 +20,16 @@ const TVShows = async function (searchQuery) {
 //   return html;
 // };
 
-const localServerTrending = async function () {
-  const res = await fetch(`./trendingList.json`);
-  const data = await res.json();
-  return data;
+const localServerTrending = async function (pageQuery) {
+  if (!pageQuery) {
+    const res = await fetch(`./trendingList.json`);
+    const data = await res.json();
+    return data;
+  } else {
+    const res = await fetch(`./moreTrendingList.json`);
+    const data = await res.json();
+    return data;
+  }
 };
 
 const localServerUpcoming = async function () {

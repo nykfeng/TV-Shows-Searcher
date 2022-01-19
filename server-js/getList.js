@@ -1,8 +1,12 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
-const trendingTV = async function () {
-  const url = "https://www.tvmaze.com/shows";
+const trendingTV = async function (pageQuery) {
+  let url = "https://www.tvmaze.com/shows";
+
+  if (pageQuery) {
+    url += pageQuery;
+  }
   const response = await axios(url);
   const html = await response.data;
   const $ = cheerio.load(html);

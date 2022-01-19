@@ -145,7 +145,10 @@ const renderPlaceholderElements = function () {
   // create the section title element
   const trendingTVDivTitleEl = document.createElement("div");
   trendingTVDivTitleEl.classList = "trending-title";
-  trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
+  // trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
+  trendingTVDivTitleEl.innerHTML =
+    `<p class="trending-title-text">📡Trending/Popular TV"</p>` +
+    expandOrCollpaseBtnsHtml(false);
   mainDisplayEl.append(trendingTVDivTitleEl);
 
   // render the left slider button
@@ -167,6 +170,17 @@ const renderPlaceholderElements = function () {
       "beforeend",
       tvshowCardPlaceholderHtml()
     );
+  }
+};
+
+// Create the trending tv more buttons, expand and collpase
+const expandOrCollpaseBtnsHtml = function (expanded) {
+  if (expanded) {
+    return `<button class="trending-title-expand"><i class="far fa-caret-square-up"></i><span class="see-more-text">Less</span></button>
+    `;
+  } else {
+    return `<button class="trending-title-expand"><i class="far fa-caret-square-down"></i><span class="see-more-text">More</span></button>
+    `;
   }
 };
 
@@ -307,4 +321,5 @@ export default {
   scaleTitleTextToFit,
   renderTrendingElements,
   renderPlaceholderElements,
+  expandOrCollpaseBtnsHtml,
 };

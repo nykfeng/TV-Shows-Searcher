@@ -92,6 +92,29 @@
   letter-spacing: 0.3rem;
   margin: 0 auto;
   padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.trending-title-expand {
+  /* width: 5rem;
+  height: 5rem; */
+  background: none;
+  padding: 0.5rem;
+  border: none;
+  font-size: 4.5rem;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.trending-title-expand:hover {
+  opacity: 0.85;
+}
+.trending-title-expand:active {
+  transform: scale(0.97);
 }
 
 .trending-card {
