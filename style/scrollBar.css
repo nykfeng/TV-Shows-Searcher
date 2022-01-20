@@ -21,3 +21,7 @@
 ::-webkit-scrollbar-thumb:hover {
   opacity: 0.7;
 }
+
+.trending-see-more__show-mid-container::-webkit-scrollbar {
+  width: 1em;
+}

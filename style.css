@@ -377,6 +377,7 @@ Main more details content section
 .main-display-content {
   display: flex;
   flex-direction: column;
+  margin-bottom: 4rem;
 }
 
 /* ========================================================================

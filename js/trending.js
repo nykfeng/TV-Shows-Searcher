@@ -147,7 +147,7 @@ const renderPlaceholderElements = function () {
   trendingTVDivTitleEl.classList = "trending-title";
   // trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
   trendingTVDivTitleEl.innerHTML =
-    `<p class="trending-title-text">📡Trending/Popular TV"</p>` +
+    `<p class="trending-title-text">📡Trending/Popular TV</p>` +
     expandOrCollpaseBtnsHtml(false);
   mainDisplayEl.append(trendingTVDivTitleEl);
 

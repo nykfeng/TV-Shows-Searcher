@@ -11,14 +11,15 @@
   box-sizing: border-box;
   margin: 3rem;
   max-width: 110rem;
-  max-height: 50.8rem;
+  /* max-height: 50.8rem; */
+  max-height: 50rem;
 
   object-fit: contain;
   display: flex;
   /* overflow: hidden; */
   align-items: flex-start;
-  border-top: 0.4rem solid var(--secondary-gray-color);
-  border-bottom: 0.4rem solid var(--secondary-gray-color);
+  /* border-top: 0.4rem solid var(--secondary-gray-color);
+  border-bottom: 0.4rem solid var(--secondary-gray-color); */
   /* border-radius: 1.5rem; */
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.8);
   font-family: "Montserrat", sans-serif;
@@ -41,6 +42,7 @@
   flex-direction: column;
   gap: 2rem;
   flex: 1 1 0px;
+  overflow: auto;
 }
 
 .trending-see-more__show-title {
@@ -64,6 +66,7 @@
 .watch-options {
   display: flex;
   gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .trending-see-more__show-end-container {
@@ -117,8 +120,7 @@
   width: 87%;
 }
 
-.trailer-option-btn,
-.watch-now-option-btn {
+.trending-btn {
   width: 12rem;
   padding: 0.8em;
   color: #fff;
@@ -197,3 +199,48 @@
   display: flex;
 }
 /* --------------- content loader ----------------------*/
+
+/* --------------- pagination buttons ----------------------*/
+
+.pagination-btns {
+  align-self: center;
+  display: flex;
+  gap: 35rem;
+}
+
+.previous-btn,
+.next-btn {
+  font-size: 4rem;
+  /* using em will make it grow or shrink propotional to font-size */
+  padding: 0.4em;
+  width: 26rem;
+  transition: transform 500ms ease-in;
+}
+
+.previous-btn {
+  background-color: var(--secondary-color);
+}
+
+.next-btn {
+  background-color: var(--main-color);
+}
+
+.previous-btn:hover,
+.next-btn:hover {
+  opacity: 0.8;
+}
+
+.previous-btn:focus,
+.next-btn:focus {
+  transform: scale(0.95);
+}
+
+.previous-btn.inactive,
+.next-btn.inactive {
+  background-color: var(--secondary-gray-color);
+}
+
+.previous-btn.inactive:focus,
+.next-btn.inactive:focus {
+  transform: scale(1);
+}

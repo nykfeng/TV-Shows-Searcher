@@ -6,7 +6,10 @@ let expanded = false;
 // number of total list to render after user scroll
 // maximum will be 10 lists, a total of 60 trending tv shows
 let listRendered = 0;
+let pageNumber = listRendered + 1;
+let trendingListCode;
 
+// render the html element of each tv show item
 const renderItemHtml = function (tv, i) {
   const html = `
     <div class="trending-see-more__show-poster-container">
@@ -48,12 +51,12 @@ const renderItemHtml = function (tv, i) {
                 </div>
                 <div class="watch-options">
                     <div class="trailer-option">
-                        <a class="trailer-option-btn" href="${youtubeTrailerUrlQuery(
+                        <a class="trailer-option-btn trending-btn" href="${youtubeTrailerUrlQuery(
                           tv.name
                         )}">Youtube</a>
                     </div>
                     <div class="watch-now-option">
-                        <a class="watch-now-option-btn" href="${
+                        <a class="watch-now-option-btn trending-btn" href="${
                           tv.officialSite
                         }">Watch Now</a>
                     </div>
@@ -65,12 +68,11 @@ const renderItemHtml = function (tv, i) {
             </div>
         </div>
     </div>
-
-    
     `;
   return html;
 };
 
+// There will be at most 8 cast per show, so make it a function to not duplicate codes
 const renderCastHtml = function (tvCast) {
   if (tvCast.lenght === 0) return;
   let html = "";
@@ -83,7 +85,7 @@ const renderCastHtml = function (tvCast) {
         <div class="trending-cast-detail">
             <img src="${tvCast[i].person?.image.medium}"
                 alt="tv cast image" class="trending-cast-img">
-                <p class="trending-cast-name" data-cast-id="533">${tvCast[i].person.name}</p>
+                <p class="trending-cast-name" data-cast-id="${tvCast[i].person.id}">${tvCast[i].person.name}</p>
         </div>
      `;
     }
@@ -92,38 +94,23 @@ const renderCastHtml = function (tvCast) {
 };
 
 // helper function for youtube url
-// https://www.youtube.com/results?search_query=the+expanse+trailer
 const youtubeTrailerUrlQuery = function (showName) {
   showName = showName.replace(/\s/g, "+");
   return `https://www.youtube.com/results?search_query=${showName}+trailer`;
 };
 
-const renderingTrendingSeeMore = function () {
-  // create item element
-  // render item skeleton elements
-  // fetch complete .then
-  // remove skeleton elements
-  // append complete elements
-};
-
-const hideUnhideTrendingTV = function (expanded) {
+// toggle hide and unhide the trending tv elements
+const hideUnhideTrendingTV = function () {
   const sliderBtns = document.querySelectorAll(".slider-button");
   const trendingEl = document.querySelector(".trendingTV");
-  if (expanded) {
-    sliderBtns.forEach((btn) => {
-      btn.classList.add("hide-it");
-    });
-    trendingEl.classList.add("hide-it");
-  } else {
-    sliderBtns.forEach((btn) => {
-      btn.classList.remove("hide-it");
-    });
-    trendingEl.classList.remove("hide-it");
-  }
+
+  sliderBtns.forEach((btn) => {
+    btn.classList.toggle("hide-it");
+  });
+  trendingEl.classList.toggle("hide-it");
 };
 
 // render content loader element for trending see more
-
 const renderContent = function (tvShowCodeList) {
   const trendingTVBlockEl = document.querySelector(".main-display-content");
 
@@ -134,6 +121,34 @@ const renderContent = function (tvShowCodeList) {
   trendingTVBlockEl.append(seeMoreDivEl);
   renderIndividualItem(tvShowCodeList, seeMoreDivEl, listRendered);
   listRendered++;
+  trendingTVBlockEl.append(renderPaginationBtns());
+  paginationBtnStatus(); // set the prev next btn to gray-out when page = 1, page = 6
+  paginationBtnActions();
+};
+
+// pagination button status
+// set the prev next btn to gray-out when page = 1, page = 6
+const paginationBtnStatus = function () {
+  const prevBtn = document.querySelector(".previous-btn");
+  const nextbtn = document.querySelector(".next-btn");
+
+  if (pageNumber === 1) {
+    prevBtn.classList.add("inactive");
+  } else if (pageNumber === 6) {
+    nextbtn.classList.add("inactive");
+  } else {
+    prevBtn.classList.remove("inactive");
+    nextbtn.classList.remove("inactive");
+  }
+};
+
+// Need to listen for pagination buttons for actions
+const paginationBtnActions = function () {
+  const prevBtn = document.querySelector(".previous-btn");
+  const nextBtn = document.querySelector(".next-btn");
+
+  nextBtn.addEventListener("click", nextPageAction);
+  prevBtn.addEventListener("click", prevPageAction);
 };
 
 // individual item render
@@ -146,14 +161,22 @@ const renderIndividualItem = function (
   const indexToFetch = listRendered * 6;
   console.log("listRendered", listRendered);
   console.log("indexToFetch", indexToFetch);
-  for (let i = indexToFetch; i < indexToFetch + 6; i++) {
+
+  console.log("tvShowCodeList length", tvShowCodeList.length);
+
+  for (
+    let i = indexToFetch;
+    i < indexToFetch + 6 && i < tvShowCodeList.length;
+    i++
+  ) {
     const seeMoreItemEl = document.createElement("div");
     seeMoreItemEl.classList = "trending-see-more__show-item";
+    console.log("data-page", pageNumber);
+    seeMoreItemEl.setAttribute("data-page", pageNumber);
     seeMoreDivEl.append(seeMoreItemEl);
     seeMoreItemEl.insertAdjacentHTML("beforeend", contentLoaderHtml());
     const tvShowDetailData = fetch.TVShowByCodeEmbeddedCast(tvShowCodeList[i]);
     tvShowDetailData.then((tvShow) => {
-      console.log(tvShow.data);
       seeMoreItemEl.innerHTML = renderItemHtml(tvShow.data, i);
     });
   }
@@ -194,37 +217,117 @@ const contentLoaderHtml = function () {
 };
 
 // Manage trending see more option
-const expandBtn = function (trendingListCode) {
+const expandBtn = function (listCode) {
   let seeMoreDivEl = document.querySelector(".trending-see-more");
   const seeMoreBtn = document.querySelector(".trending-title-expand");
+  let paginationBtnsEl = document.querySelector(".pagination-btns");
+  trendingListCode = listCode;
 
-  console.log("Clicked", expanded);
   if (!expanded) {
     // If the see more trending tv element has not yet generated
     if (!seeMoreDivEl) {
       renderContent(trendingListCode);
+      paginationBtnsEl = document.querySelector(".pagination-btns");
       // openCastInfoInShowDetails(); use to listen for name clicks
       expanded = true;
-      hideUnhideTrendingTV(expanded);
+      hideUnhideTrendingTV();
       seeMoreBtn.innerHTML = trending.expandOrCollpaseBtnsHtml(expanded);
     } else {
       // cast info is there, so no need to generate again, set display
       seeMoreDivEl.style.display = "flex";
+      paginationBtnsEl.style.display = "flex";
       expanded = true;
-      hideUnhideTrendingTV(expanded);
+      hideUnhideTrendingTV();
       seeMoreBtn.innerHTML = trending.expandOrCollpaseBtnsHtml(expanded);
     }
   } else {
     // cast info is there set display to none to hide
     seeMoreDivEl = document.querySelector(".trending-see-more");
+    paginationBtnsEl = document.querySelector(".pagination-btns");
     seeMoreDivEl.style.display = "none";
+    paginationBtnsEl.style.display = "none";
     expanded = false;
-    hideUnhideTrendingTV(expanded);
+    hideUnhideTrendingTV();
     seeMoreBtn.innerHTML = trending.expandOrCollpaseBtnsHtml(expanded);
   }
 };
 
-// add the window listener for scroll, add and remove toggle it
+// next page button action
+const nextPageAction = function () {
+  if (pageNumber === 6) return;
+  const nextPageNumber = pageNumber + 1;
+  const nextPageItemEl = document.querySelector(
+    `[data-page='${nextPageNumber}']`
+  );
+  const seeMoreDivEl = document.querySelector(".trending-see-more");
+
+  // if the list of next page doesn't exist, we render it
+  if (!nextPageItemEl) {
+    // before rendering next page, hide the current page items
+    toggleDisplayCurrentPageItems(pageNumber);
+
+    // add 1 page to current page number variable
+    // the render individual item function relys on pageNumber variable
+    pageNumber++;
+    // now render next page items
+    renderIndividualItem(trendingListCode, seeMoreDivEl, listRendered);
+
+    // at last list rendered +1 too
+    listRendered++;
+  } else {
+    // since they have been rendered before
+
+    // hide the current page items
+    toggleDisplayCurrentPageItems(pageNumber);
+    // reveal the next page items
+    toggleDisplayCurrentPageItems(nextPageNumber);
+    pageNumber++;
+  }
+  paginationBtnStatus();
+};
+
+// previous page button action
+const prevPageAction = function () {
+  if (pageNumber === 1) return;
+  const prevPageNumber = pageNumber - 1;
+  // const prevPageItemEl = document.querySelector(
+  //   `[data-page='${prevPageNumber}']`
+  // );
+
+  // since they have been rendered before
+
+  // hide the current page items
+  toggleDisplayCurrentPageItems(pageNumber);
+  // reveal the prev page items
+  toggleDisplayCurrentPageItems(prevPageNumber);
+  pageNumber--;
+
+  paginationBtnStatus();
+};
+
+// Create pagination buttons, prev and next
+const renderPaginationBtns = function () {
+  const paginationBtns = document.createElement("div");
+  paginationBtns.classList = "pagination-btns";
+  const prevBtn = document.createElement("button");
+  const nextBtn = document.createElement("button");
+  prevBtn.textContent = "PREV";
+  nextBtn.textContent = "NEXT";
+  prevBtn.classList = "previous-btn trending-btn";
+  nextBtn.classList = "next-btn trending-btn";
+  paginationBtns.append(prevBtn);
+  paginationBtns.append(nextBtn);
+
+  return paginationBtns;
+};
+
+// hiding trending tv show items of the current page
+const toggleDisplayCurrentPageItems = function (page) {
+  const pageItemEls = document.querySelectorAll(`[data-page='${page}']`);
+  pageItemEls.forEach((item) => {
+    item.classList.toggle("hide-it");
+  });
+};
 
 export default {
   hideUnhideTrendingTV,
