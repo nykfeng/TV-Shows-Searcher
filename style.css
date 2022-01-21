@@ -383,6 +383,16 @@ Main more details content section
 /* ========================================================================
 media query for responsive devices
 ========================================================================*/
+@media only screen and (min-width: 2000px) {
+  .result-area .filmography-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15rem;
+    justify-content: space-around;
+    align-items: end;
+  }
+}
+
 @media only screen and (max-width: 1730px) {
   .tv-show-cast {
     grid-column: 1 / -1;
@@ -515,6 +525,10 @@ media query for responsive devices
     width: 3rem;
     height: 3rem;
     font-size: 1.5rem;
+  }
+
+  .see-more-text {
+    display: none;
   }
 
   .trending-card {

@@ -1,4 +1,3 @@
-
 const TVShows = async function (searchQuery) {
   const res = await fetch(
     `https://api.tvmaze.com/search/shows?q=${searchQuery}`
@@ -6,7 +5,6 @@ const TVShows = async function (searchQuery) {
   const data = await res.json();
   return data;
 };
-
 
 const localServerTrending = async function (pageQuery) {
   if (!pageQuery) {
@@ -20,10 +18,16 @@ const localServerTrending = async function (pageQuery) {
   }
 };
 
-const localServerUpcoming = async function () {
-  const res = await fetch(`./upcomingList.json`);
-  const data = await res.json();
-  return data;
+const localServerUpcoming = async function (page) {
+  if (page === 1) {
+    const res = await fetch(`./upcomingList.json`);
+    const data = await res.json();
+    return data;
+  } else {
+    const res = await fetch(`./moreUpcomingList.json`);
+    const data = await res.json();
+    return data;
+  }
 };
 
 const TVShowCast = async function (tvShowCode) {

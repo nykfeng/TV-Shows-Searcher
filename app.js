@@ -256,8 +256,8 @@ const trendingAndPopularTvShows = async function () {
       if (e.target.classList.contains("trending-cast-name")) {
         reusableCastListener(e.target);
       } else if (
-        e.target.classList.contains("trending-see-more-poster-img") ||
-        e.target.classList.contains("trending-see-more__show-title")
+        e.target.classList.contains("tsm-poster-img") ||
+        e.target.classList.contains("tsm__show-title")
       ) {
         const showId = e.target.dataset.showId;
         getTvShowDetails(showId);
@@ -370,8 +370,16 @@ const getTvShowDetails = async function (showId) {
 };
 
 const upcomingTVShows = async function () {
-  const upcomingTVListData = await fetch.localServerUpcoming();
+  // render the block and title element first
+  upcoming.renderBlockAndTitleElements();
+  // Get the first page of season premier shows
+  const upcomingTVListData = await fetch.localServerUpcoming(1);
+  // Then immediately render it
   upcoming.renderOnScheduleElements(upcomingTVListData);
+
+  // Get it a second time, this time the second page
+  // Separate it for performance improvement. The first time it will load faster
+  upcomingTVListData.push(...(await fetch.localServerUpcoming(2)));
 
   // See more section listeners--------------------------------------------
   const seeMoreBtn = document.querySelector(
@@ -398,7 +406,9 @@ const upcomingTVShows = async function () {
   // See more section listeners--------------------------------------------
 
   // Listen for click event for the upcoming tv show
-  const upcomingTvShowSectionEl = document.querySelector(".upcoming-cards");
+  const upcomingTvShowSectionEl = document.querySelector(
+    ".upcoming-tv-content"
+  );
   upcomingTvShowSectionEl.addEventListener("click", function (e) {
     if (e.target.closest(".upcoming-card")) {
       const tvShowId = e.target.closest(".upcoming-card").dataset.showId;

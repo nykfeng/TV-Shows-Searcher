@@ -25,3 +25,11 @@
 .trending-see-more__show-mid-container::-webkit-scrollbar {
   width: 1em;
 }
+
+.tsm__show-mid-container::-webkit-scrollbar {
+  width: 1em;
+}
+
+.tsm__show-end-container::-webkit-scrollbar {
+  width: 1em;
+}

@@ -11,65 +11,118 @@ let trendingListCode;
 
 // render the html element of each tv show item
 const renderItemHtml = function (tv, i) {
+  // const html = `
+  //   <div class="trending-see-more__show-poster-container">
+  //       <img src="${tv.image.original}" alt="${tv.name} poster"
+  //           class="trending-see-more-poster-img" data-show-id="${tv.id}">
+  //   </div>
+  //   <div class="trending-see-more__content">
+
+  //       <div class="trending-see-more__show-title" data-show-id="${tv.id}">${
+  //   tv.name
+  // }</div>
+  //       <div class="trending-see-more__show-rank ${
+  //         i === 0
+  //           ? "gold-rank"
+  //           : i === 1
+  //           ? "silver-rank"
+  //           : i === 2
+  //           ? "bronze-rank"
+  //           : ""
+  //       }">${i + 1}</div>
+
+  //       <div class="trending-see-more__show-content">
+  //           <div class="trending-see-more__show-mid-container">
+
+  //               <div class="trending-see-more__show-genre">${
+  //                 tv.genres.join(", ") || "Various"
+  //               }</div>
+  //               <div class="trending-see-more__show-score">
+  //                   <div class="stars-outer">
+  //                       <div class="stars-inner" style="width:${
+  //                         parseFloat(tv.rating.average) * 10
+  //                       }%;"></div>
+  //                   </div>
+  //                   <div class="show-score-number">${tv.rating.average}</div>
+  //               </div>
+  //               <div class="trending-see-more__show-network"><b>${
+  //                 tv.network ? tv.network.name : tv.webChannel.name
+  //               }</b></div>
+  //               <div class="trending-see-more__show-summary">${tv.summary}
+
+  //               </div>
+  //               <div class="watch-options">
+  //                   <div class="trailer-option">
+  //                       <a class="trailer-option-btn trending-btn" href="${youtubeTrailerUrlQuery(
+  //                         tv.name
+  //                       )}">Youtube</a>
+  //                   </div>
+  //                   <div class="watch-now-option">
+  //                       <a class="watch-now-option-btn trending-btn" href="${
+  //                         tv.officialSite
+  //                       }">Watch Now</a>
+  //                   </div>
+  //               </div>
+  //           </div>
+
+  //           <div class="trending-see-more__show-end-container">
+  //               ${renderCastHtml(tv._embedded.cast)}
+  //           </div>
+  //       </div>
+  //   </div>
+  //   `;
   const html = `
-    <div class="trending-see-more__show-poster-container">
+    <div class="tsm__show-poster-container">
         <img src="${tv.image.original}" alt="${tv.name} poster"
-            class="trending-see-more-poster-img" data-show-id="${tv.id}">
+            class="tsm-poster-img" data-show-id="${tv.id}">
     </div>
-    <div class="trending-see-more__content">
+    <div class="tsm__show-title" data-show-id="${tv.id}">${tv.name}</div>
+          <div class="trending-rank ${
+            i === 0
+              ? "gold-rank"
+              : i === 1
+              ? "silver-rank"
+              : i === 2
+              ? "bronze-rank"
+              : ""
+          }">${i + 1}</div>
 
-        <div class="trending-see-more__show-title" data-show-id="${tv.id}">${
-    tv.name
-  }</div>
-        <div class="trending-see-more__show-rank ${
-          i === 0
-            ? "gold-rank"
-            : i === 1
-            ? "silver-rank"
-            : i === 2
-            ? "bronze-rank"
-            : ""
-        }">${i + 1}</div>
+          <div class="tsm__show-mid-container">
 
-        <div class="trending-see-more__show-content">
-            <div class="trending-see-more__show-mid-container">
-
-                <div class="trending-see-more__show-genre">${
-                  tv.genres.join(", ") || "Various"
-                }</div>
-                <div class="trending-see-more__show-score">
-                    <div class="stars-outer">
-                        <div class="stars-inner" style="width:${
-                          parseFloat(tv.rating.average) * 10
-                        }%;"></div>
-                    </div>
-                    <div class="show-score-number">${tv.rating.average}</div>
-                </div>
-                <div class="trending-see-more__show-network"><b>${
-                  tv.network ? tv.network.name : tv.webChannel.name
-                }</b></div>
-                <div class="trending-see-more__show-summary">${tv.summary}
-                   
-                </div>
-                <div class="watch-options">
-                    <div class="trailer-option">
-                        <a class="trailer-option-btn trending-btn" href="${youtubeTrailerUrlQuery(
-                          tv.name
-                        )}">Youtube</a>
-                    </div>
-                    <div class="watch-now-option">
-                        <a class="watch-now-option-btn trending-btn" href="${
-                          tv.officialSite
-                        }">Watch Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="trending-see-more__show-end-container">
-                ${renderCastHtml(tv._embedded.cast)}
-            </div>
-        </div>
+          <div class="tsm__show-genre">${
+            tv.genres.join(", ") || "Various"
+          }</div>
+          <div class="tsm__show-score">
+              <div class="stars-outer">
+                  <div class="stars-inner" style="width:${
+                    parseFloat(tv.rating.average) * 10
+                  }%;"></div>
+              </div>
+              <div class="show-score-number">${tv.rating.average}</div>
+          </div>
+          <div class="tsm__show-network"><b>${
+            tv.network ? tv.network.name : tv.webChannel.name
+          }</b></div>
+          <div class="tsm__show-summary">${tv.summary}
+             
+          </div>
+          <div class="watch-options">
+              <div class="trailer-option">
+                  <a class="trailer-option-btn trending-btn" href="${youtubeTrailerUrlQuery(
+                    tv.name
+                  )}" target="_blank">Youtube</a>
+              </div>
+              <div class="watch-now-option">
+                  <a class="watch-now-option-btn trending-btn" href="${
+                    tv.officialSite
+                  }" target="_blank">Watch Now</a>
+              </div>
+          </div>
+      </div>
+      <div class="tsm__show-end-container">
+      ${renderCastHtml(tv._embedded.cast)}
     </div>
+
     `;
   return html;
 };

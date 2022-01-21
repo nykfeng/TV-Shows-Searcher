@@ -33,9 +33,14 @@ app.get("/moreTrendingList.json", async (req, res) => {
 app.get("/upcomingList.json", async (req, res) => {
   let page = "";
   const listData = await getList.upcomingTV(page);
-  page = "&page=2";
-  listData.push(...(await getList.upcomingTV(page)));
+  console.log("Accessed upcoming TV from server side");
 
+  res.send(listData);
+});
+
+app.get("/moreUpcomingList.json", async (req, res) => {
+  let page = "&page=2";
+  const listData = await getList.upcomingTV(page);
   console.log("Accessed upcoming TV from server side");
 
   res.send(listData);

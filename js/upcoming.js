@@ -1,6 +1,6 @@
 import trending from "./trending.js";
 
-const renderOnScheduleElements = function (upcomingTVList) {
+const renderBlockAndTitleElements = function () {
   const upcomingTVContentEl = document.querySelector(".upcoming-tv-content");
 
   // Add the title bar element
@@ -11,6 +11,10 @@ const renderOnScheduleElements = function (upcomingTVList) {
     ${trending.expandOrCollpaseBtnsHtml(false)}</div>`;
 
   upcomingTVContentEl.append(upcomingTVTitleEl);
+};
+
+const renderOnScheduleElements = function (upcomingTVList) {
+  const upcomingTVContentEl = document.querySelector(".upcoming-tv-content");
 
   // Add the upcoming tv cards section element
   const upcomingCardsEl = document.createElement("div");
@@ -125,6 +129,7 @@ const displayUpcomingCards = function () {
 window.addEventListener("resize", displayUpcomingCards);
 
 export default {
+  renderBlockAndTitleElements,
   renderOnScheduleElements,
   imageStringProcessor,
   dateStringProcessor,
