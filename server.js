@@ -24,14 +24,18 @@ app.get("/trendingList.json", async (req, res) => {
 });
 
 app.get("/moreTrendingList.json", async (req, res) => {
-  const listData = await getList.trendingTV('?page=2');
+  const listData = await getList.trendingTV("?page=2");
   console.log("Accessed more trending TV from server side");
 
   res.send(listData);
 });
 
 app.get("/upcomingList.json", async (req, res) => {
-  const listData = await getList.upcomingTV();
+  let page = "";
+  const listData = await getList.upcomingTV(page);
+  page = "&page=2";
+  listData.push(...(await getList.upcomingTV(page)));
+
   console.log("Accessed upcoming TV from server side");
 
   res.send(listData);

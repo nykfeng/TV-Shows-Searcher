@@ -1,10 +1,15 @@
-const renderUpcomingElements = function (upcomingTVList) {
+import trending from "./trending.js";
+
+const renderOnScheduleElements = function (upcomingTVList) {
   const upcomingTVContentEl = document.querySelector(".upcoming-tv-content");
 
   // Add the title bar element
   const upcomingTVTitleEl = document.createElement("div");
   upcomingTVTitleEl.classList = "upcoming-tv-title";
-  upcomingTVTitleEl.textContent = "📆Upcoming TV Schedule";
+  // upcomingTVTitleEl.textContent = "📆Upcoming Season Premieres";
+  upcomingTVTitleEl.innerHTML = `<p class="upcoming-tv-title-text">📆Upcoming Season Premieres</p><div class="expand-toggle">
+    ${trending.expandOrCollpaseBtnsHtml(false)}</div>`;
+
   upcomingTVContentEl.append(upcomingTVTitleEl);
 
   // Add the upcoming tv cards section element
@@ -30,7 +35,6 @@ const renderUpcomingElements = function (upcomingTVList) {
               <div class="upcoming-date__day">
                 ${dateStringProcessor(tv.showDate).day}
               </div>
-
           </div>
           <div class="upcoming-date__time">${tv.showTime}</div>
       </div>
@@ -90,7 +94,9 @@ const calculateNumberOfUpcomingCards = function () {
 };
 
 const hideAllUpcomingCards = function () {
-  const allUpcomingCards = document.querySelectorAll(".upcoming-card");
+  const allUpcomingCards = document.querySelectorAll(
+    ".upcoming-cards .upcoming-card"
+  );
   allUpcomingCards.forEach((card) => {
     if (!card.classList.contains("hide-it")) {
       card.style.display = "none";
@@ -99,7 +105,9 @@ const hideAllUpcomingCards = function () {
 };
 
 const UnhideCards = function (numberOfCards) {
-  const allUpcomingCards = document.querySelectorAll(".upcoming-card");
+  const allUpcomingCards = document.querySelectorAll(
+    ".upcoming-cards .upcoming-card"
+  );
   allUpcomingCards.forEach((card, i) => {
     if (i < numberOfCards) {
       card.style.display = "flex";
@@ -117,5 +125,7 @@ const displayUpcomingCards = function () {
 window.addEventListener("resize", displayUpcomingCards);
 
 export default {
-  renderUpcomingElements,
+  renderOnScheduleElements,
+  imageStringProcessor,
+  dateStringProcessor,
 };

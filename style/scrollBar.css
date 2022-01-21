@@ -1,4 +1,4 @@
-@import "style.css";
+@import "../style.css";
 
 ::-webkit-scrollbar {
   width: 2.5em;

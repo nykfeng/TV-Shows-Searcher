@@ -14,11 +14,13 @@ const renderItemHtml = function (tv, i) {
   const html = `
     <div class="trending-see-more__show-poster-container">
         <img src="${tv.image.original}" alt="${tv.name} poster"
-            class="trending-see-more-poster-img">
+            class="trending-see-more-poster-img" data-show-id="${tv.id}">
     </div>
     <div class="trending-see-more__content">
 
-        <div class="trending-see-more__show-title">${tv.name}</div>
+        <div class="trending-see-more__show-title" data-show-id="${tv.id}">${
+    tv.name
+  }</div>
         <div class="trending-see-more__show-rank ${
           i === 0
             ? "gold-rank"
@@ -157,12 +159,8 @@ const renderIndividualItem = function (
   seeMoreDivEl,
   listRendered
 ) {
-  // this will fetch 6 tv shows each time
+  // this will fetch 6 tv shows each time, because 6 items per page
   const indexToFetch = listRendered * 6;
-  console.log("listRendered", listRendered);
-  console.log("indexToFetch", indexToFetch);
-
-  console.log("tvShowCodeList length", tvShowCodeList.length);
 
   for (
     let i = indexToFetch;
@@ -171,10 +169,13 @@ const renderIndividualItem = function (
   ) {
     const seeMoreItemEl = document.createElement("div");
     seeMoreItemEl.classList = "trending-see-more__show-item";
-    console.log("data-page", pageNumber);
+    // set data attribute with page number, so we can use it to hide the items later
     seeMoreItemEl.setAttribute("data-page", pageNumber);
     seeMoreDivEl.append(seeMoreItemEl);
+
+    // add content loader html
     seeMoreItemEl.insertAdjacentHTML("beforeend", contentLoaderHtml());
+    // fetch data for each
     const tvShowDetailData = fetch.TVShowByCodeEmbeddedCast(tvShowCodeList[i]);
     tvShowDetailData.then((tvShow) => {
       seeMoreItemEl.innerHTML = renderItemHtml(tvShow.data, i);
@@ -219,7 +220,7 @@ const contentLoaderHtml = function () {
 // Manage trending see more option
 const expandBtn = function (listCode) {
   let seeMoreDivEl = document.querySelector(".trending-see-more");
-  const seeMoreBtn = document.querySelector(".trending-title-expand");
+  const seeMoreBtn = document.querySelector(".trending-title .expand-toggle");
   let paginationBtnsEl = document.querySelector(".pagination-btns");
   trendingListCode = listCode;
 
@@ -241,7 +242,7 @@ const expandBtn = function (listCode) {
       seeMoreBtn.innerHTML = trending.expandOrCollpaseBtnsHtml(expanded);
     }
   } else {
-    // cast info is there set display to none to hide
+    // hide all the trending see more items if the button clicked was to collpase them
     seeMoreDivEl = document.querySelector(".trending-see-more");
     paginationBtnsEl = document.querySelector(".pagination-btns");
     seeMoreDivEl.style.display = "none";
@@ -328,6 +329,9 @@ const toggleDisplayCurrentPageItems = function (page) {
     item.classList.toggle("hide-it");
   });
 };
+
+// Event listener for items on see more
+const addAListener = function () {};
 
 export default {
   hideUnhideTrendingTV,

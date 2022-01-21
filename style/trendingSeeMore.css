@@ -28,7 +28,7 @@
 
 .trending-see-more-poster-img {
   max-height: 50rem;
-  object-fit: contain;
+  cursor: pointer;
 }
 
 .trending-see-more__show-mid-container {
@@ -50,11 +50,16 @@
   font-size: 4rem;
   font-weight: bold;
   color: #fff;
+  cursor: pointer;
   background-image: linear-gradient(
     to right,
     var(--secondary-color),
     var(--main-color)
   );
+}
+
+.trending-see-more__show-title:hover {
+  color: black;
 }
 
 .trending-see-more__show-content {

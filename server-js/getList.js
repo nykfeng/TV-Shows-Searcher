@@ -19,9 +19,9 @@ const trendingTV = async function (pageQuery) {
   return tvShowCodes;
 };
 
-const upcomingTV = async function () {
+const upcomingTV = async function (page) {
   const url =
-    "https://www.tvmaze.com/countdown?filter=season&source=country-US";
+    `https://www.tvmaze.com/countdown?filter=season&source=country-US${page}`;
   const response = await axios(url);
   const html = await response.data;
   const $ = cheerio.load(html);

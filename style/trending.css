@@ -96,7 +96,11 @@
   justify-content: space-between;
 }
 
-.trending-title-expand {
+.expand-toggle {
+  display: flex;
+}
+
+.title-expand {
   /* width: 5rem;
   height: 5rem; */
   background: none;
@@ -110,10 +114,10 @@
   align-items: center;
   gap: 0.5rem;
 }
-.trending-title-expand:hover {
+.title-expand:hover {
   opacity: 0.85;
 }
-.trending-title-expand:active {
+.title-expand:active {
   transform: scale(0.97);
 }
 

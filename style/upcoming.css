@@ -32,6 +32,8 @@
   letter-spacing: 0.3rem;
   margin: 0 auto;
   padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .upcoming-tv-content {
@@ -144,9 +146,9 @@
 }
 
 .upcoming-network {
+  font-family: "Roboto";
   font-size: 2.5rem;
   text-align: right;
   padding-bottom: 1rem;
   padding-right: 1rem;
-  letter-spacing: 0.2rem;
 }

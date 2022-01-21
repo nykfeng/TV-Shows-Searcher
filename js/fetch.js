@@ -1,4 +1,3 @@
-// import axios from "axios";
 
 const TVShows = async function (searchQuery) {
   const res = await fetch(
@@ -8,17 +7,6 @@ const TVShows = async function (searchQuery) {
   return data;
 };
 
-// const trendingTV = async function () {
-//   const url =
-//     "https://cors-anywhere.herokuapp.com/https://www.tvmaze.com/shows";
-//   const config = {
-//     headers: { "Access-Control-Allow-Origin": "*" },
-//   };
-
-//   const response = await axios.get(url, config);
-//   const html = await response.data;
-//   return html;
-// };
 
 const localServerTrending = async function (pageQuery) {
   if (!pageQuery) {

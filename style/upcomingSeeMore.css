@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&family=Roboto:ital,wght@0,100;0,300;0,400;1,100&display=swap");
+
+.upcoming-card {
+  overflow: hidden;
+}
+.upcoming-card:hover .upcoming-show-content {
+  transform: translateY(0);
+}
+
+.upcoming-show-content {
+  padding: 1.5rem;
+  font-family: Roboto;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85));
+  transform: translateY(75%);
+  transition: transform 500ms ease;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.upcoming-date {
+  transform: translateX(-150%);
+  transition: transform 500ms ease;
+}
+
+.upcoming-card:hover .upcoming-date {
+  transform: translateX(0);
+}
+
+.upcoming-more-card-div {
+  display: grid;
+  width: 100%;
+  padding: 5% 15%;
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  gap: 5rem;
+  place-items: center;
+}
+
+.upcoming-more-card-div .upcoming-card:not(:first-child) {
+  margin-left: 0;
+}
+
+.upcoming-more-card-div .upcoming-card:hover {
+  transform: translateY(-10%);
+}
+
+.upcoming-more-card-div .upcoming-card:hover ~ .upcoming-card,
+.upcoming-more-card-div .upcoming-card:focus-within ~ .upcoming-card {
+  transform: none;
+}

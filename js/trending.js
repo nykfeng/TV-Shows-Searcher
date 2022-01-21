@@ -4,7 +4,7 @@ let totalNumberOfCards;
 let allCards;
 
 const resetCards = function () {
-  hideAllCards(); // must be first here so that totalNumberOfCards and allCards are initialized
+  // hideAllCards(); // must be first here so that totalNumberOfCards and allCards are initialized
   numberToDisplay = calculateNumberOfTVShowCards();
   hideAndUnhideCards(numberToDisplay, 1); // As it is reset, so the first index is 1
 };
@@ -12,15 +12,15 @@ const resetCards = function () {
 const hideAllCards = function () {
   allCards = document.querySelectorAll(".trending-card");
   allCards.forEach((card) => {
-    card.classList.add("hide-it");
+    if (!card.classList.contains("hide-it")) {
+      card.classList.add("hide-it");
+    }
   });
   totalNumberOfCards = allCards.length;
 };
 
 const hideAndUnhideCards = function (numberOfCards, startIndex) {
-  // for (let i = startIndex; i < startIndex + numberOfCards; i++) {
-  //   allCards[i];
-  // }
+  allCards = document.querySelectorAll(".trending-card");
   const endIndex = startIndex + numberOfCards;
   allCards.forEach((card) => {
     if (startIndex < endIndex) {
@@ -61,16 +61,18 @@ const rightBtnActions = function () {
     newSliderNumber = newSliderNumber % totalNumberOfCards;
   }
 
-  //first card add classlist hide-it,
-
   const currentCardEl = document.querySelector(`.slider-${currentFirst}`);
-  currentCardEl.classList.add("hide-it");
-
   const newCardEl = document.querySelector(`.slider-${newSliderNumber}`);
-  newCardEl.classList.remove("hide-it");
 
-  // This has to be after the new card number was taken
-  currentFirst++;
+  // Moving right, current first card should be hidden, next/new card should be unhidden
+
+  // if the new card - next card is not an available element,
+  // it should not try to add class and current first should not ++
+  if (newCardEl) {
+    currentCardEl.classList.add("hide-it");
+    newCardEl.classList.remove("hide-it");
+    currentFirst++;
+  }
 };
 
 const displayTVShowCards = function () {
@@ -146,9 +148,9 @@ const renderPlaceholderElements = function () {
   const trendingTVDivTitleEl = document.createElement("div");
   trendingTVDivTitleEl.classList = "trending-title";
   // trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
-  trendingTVDivTitleEl.innerHTML =
-    `<p class="trending-title-text">📡Trending/Popular TV</p>` +
-    expandOrCollpaseBtnsHtml(false);
+  trendingTVDivTitleEl.innerHTML = `<p class="trending-title-text">📡Trending/Popular TV</p><div class="expand-toggle">${expandOrCollpaseBtnsHtml(
+    false
+  )}</div>`;
   mainDisplayEl.append(trendingTVDivTitleEl);
 
   // render the left slider button
@@ -164,6 +166,7 @@ const renderPlaceholderElements = function () {
   trendingTVPlaceholderEl.classList = "trending-card-placeholder-section";
   trendingTVDivEl.append(trendingTVPlaceholderEl);
 
+  // calculate number of place holder cards to display based on the windows view port width
   const numberOfCards = calculateNumberOfTVShowCards();
   for (let i = 0; i < numberOfCards; i++) {
     trendingTVPlaceholderEl.insertAdjacentHTML(
@@ -176,10 +179,10 @@ const renderPlaceholderElements = function () {
 // Create the trending tv more buttons, expand and collpase
 const expandOrCollpaseBtnsHtml = function (expanded) {
   if (expanded) {
-    return `<button class="trending-title-expand"><i class="far fa-caret-square-up"></i><span class="see-more-text">Less</span></button>
+    return `<button class="title-expand"><i class="far fa-caret-square-up"></i><span class="see-more-text">Less</span></button>
     `;
   } else {
-    return `<button class="trending-title-expand"><i class="far fa-caret-square-down"></i><span class="see-more-text">More</span></button>
+    return `<button class="title-expand"><i class="far fa-caret-square-down"></i><span class="see-more-text">More</span></button>
     `;
   }
 };
@@ -198,32 +201,13 @@ const tvshowCardPlaceholderHtml = function () {
 
 // Render the whole trending / popular section html element and return it
 const renderTrendingElements = function (trendingListOfTVToRender) {
-  // const mainDisplayEl = document.querySelector(".main-display-content");
-
-  // const trendingTVDivEl = document.createElement("div");
-  // trendingTVDivEl.classList = "trendingTV";
-  // const trendingTVDivTitleEl = document.createElement("div");
-  // trendingTVDivTitleEl.classList = "trending-title";
-  // trendingTVDivTitleEl.textContent = "📡Trending/Popular TV";
-
-  // mainDisplayEl.append(trendingTVDivTitleEl);
-  // trendingTVDivTitleEl.insertAdjacentHTML(
-  //   "afterend",
-  //   renderSliderLeftBtnElements()
-  // );
-
   const trendingTVDivEl = document.querySelector(".trendingTV");
-
-  // remove the placeholder content
-  const trendingTVPlaceholderContentEl = document.querySelector(
-    ".trending-card-placeholder-section"
-  );
-  trendingTVPlaceholderContentEl.remove();
 
   trendingListOfTVToRender.forEach((tv, i) => {
     const trendingCardEl = document.createElement("div");
     trendingCardEl.classList = "trending-card";
     trendingCardEl.classList.add(`slider-${i + 1}`);
+    trendingCardEl.classList.add("hide-it");
 
     const html = `
             <div class="trending-rank ${
@@ -308,11 +292,17 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
 
     trendingTVDivEl.append(trendingCardEl);
   });
-  // mainDisplayEl.insertAdjacentHTML("beforeend", renderSliderRightBtnElements());
 
   return trendingTVDivEl;
 };
 
+// remove the placeholder content
+const removePlaceHolderElements = function () {
+  const trendingTVPlaceholderContentEl = document.querySelector(
+    ".trending-card-placeholder-section"
+  );
+  trendingTVPlaceholderContentEl.remove();
+};
 export default {
   hideAllCards,
   resetCards,
@@ -322,4 +312,5 @@ export default {
   renderTrendingElements,
   renderPlaceholderElements,
   expandOrCollpaseBtnsHtml,
+  removePlaceHolderElements,
 };

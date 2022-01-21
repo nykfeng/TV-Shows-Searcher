@@ -5,6 +5,7 @@ import people from "./js/people.js";
 import details from "./js/showDetails.js";
 import upcoming from "./js/upcoming.js";
 import trendingSeeMore from "./js/trendingSeeMore.js";
+import upcomingSeeMore from "./js/upcomingSeeMore.js";
 
 const inputEl = document.querySelector(".input-bar");
 const resultListEl = document.querySelector(".result-list");
@@ -243,22 +244,30 @@ const trendingAndPopularTvShows = async function () {
 
   const TVShowFullInfo = []; // To store both show and cast info
 
-  const seeMoreBtn = document.querySelector(".trending-title-expand");
+  // See more section listeners--------------------------------------------
+  const seeMoreBtn = document.querySelector(".trending-title .expand-toggle");
   seeMoreBtn.addEventListener("click", async function () {
+    // Put in the list of tv show codes to render further
     trendingSeeMore.expandBtn(trendingListCode);
-  });
-  // Will listen to another page for a total of 60 trending shows
-  const moreTrendingListCode = await fetch.localServerTrending("?page=2");
-  trendingListCode.push(...moreTrendingListCode);
 
-  // need to listen for window scroll event to make another call to get trending
-  // const moreTrendingListCode = await fetch.localServerTrending('?page=2');
+    // listen for tv show elements being clicked on see more pages
+    const trendingSeeMoreEl = document.querySelector(".trending-see-more");
+    trendingSeeMoreEl.addEventListener("click", function (e) {
+      if (e.target.classList.contains("trending-cast-name")) {
+        reusableCastListener(e.target);
+      } else if (
+        e.target.classList.contains("trending-see-more-poster-img") ||
+        e.target.classList.contains("trending-see-more__show-title")
+      ) {
+        const showId = e.target.dataset.showId;
+        getTvShowDetails(showId);
+      }
+    });
+  });
+  // See more section listeners--------------------------------------------
 
   // Now make API calls to get tv show info and cast info
   for (let i = 0; i < NUMBER_TRENDING; i++) {
-    // const tvShowInfo = await fetch.TVShowByCode(trendingListCode[i]);
-    // const tvShowCastInfo = await fetch.TVShowCast(trendingListCode[i]);
-
     // One API call to get both tv show info along with its cast info
     const tvShowDetailData = await fetch.TVShowByCodeEmbeddedCast(
       trendingListCode[i]
@@ -272,40 +281,22 @@ const trendingAndPopularTvShows = async function () {
     });
   }
 
-  // Now we can render them
+  // Now we can render them in html elements and append to the trending div
   const trendingEl = trending.renderTrendingElements(TVShowFullInfo);
 
+  // append trending div to the main display area
+
   mainDisplayEl.append(trendingEl);
-  trending.scaleTitleTextToFit();
+  trending.removePlaceHolderElements();
 
   // Manage the cards for the slider here
   trending.resetCards();
 
-  // Manage trending see more option
-  // const seeMoreOption = function() {
-  //   let seeMoreDivEl = document.querySelector(".trending-see-more");
-  //   let expanded = false;
-  //   if (!expanded) {
-  //     // If the see more trending tv element has not yet generated
-  //     if (!seeMoreDivEl) {
-  //       trendingSeeMore.renderContent(showID);
-  //       openCastInfoInShowDetails();
-  //       expanded = true;
-  //       dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
-  //     } else {
-  //       // cast info is there, so no need to generate again, set display
-  //       seeMoreDivEl.style.display = "grid";
-  //       expanded = true;
-  //       dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-up"></i>`;
-  //     }
-  //   } else {
-  //     // cast info is there set display to none to hide
-  //     seeMoreDivEl = document.querySelector(".trending-see-more");
-  //     seeMoreDivEl.style.display = "none";
-  //     expanded = false;
-  //     dropdownBtn.innerHTML = `<i class="fas fa-chevron-circle-down">`;
-  //   }
-  // }
+  trending.scaleTitleTextToFit();
+
+  // Will listen to another page for a total of 60 trending shows
+  const moreTrendingListCode = await fetch.localServerTrending("?page=2");
+  trendingListCode.push(...moreTrendingListCode);
 
   // Listen for buttons after they are rendered
   const leftBtn = document.querySelector(".left-slider-btn");
@@ -378,14 +369,35 @@ const getTvShowDetails = async function (showId) {
   });
 };
 
-trendingAndPopularTvShows();
-
 const upcomingTVShows = async function () {
-  const upcomingTVList = await fetch.localServerUpcoming();
-  upcoming.renderUpcomingElements(upcomingTVList);
+  const upcomingTVListData = await fetch.localServerUpcoming();
+  upcoming.renderOnScheduleElements(upcomingTVListData);
+
+  // See more section listeners--------------------------------------------
+  const seeMoreBtn = document.querySelector(
+    ".upcoming-tv-title .expand-toggle"
+  );
+  seeMoreBtn.addEventListener("click", async function () {
+    // Put in the list of tv show codes to render further
+    upcomingSeeMore.expandBtn(upcomingTVListData);
+
+    // listen for tv show elements being clicked on see more pages
+    // const trendingSeeMoreEl = document.querySelector(".trending-see-more");
+    // trendingSeeMoreEl.addEventListener("click", function (e) {
+    //   if (e.target.classList.contains("trending-cast-name")) {
+    //     reusableCastListener(e.target);
+    //   } else if (
+    //     e.target.classList.contains("trending-see-more-poster-img") ||
+    //     e.target.classList.contains("trending-see-more__show-title")
+    //   ) {
+    //     const showId = e.target.dataset.showId;
+    //     getTvShowDetails(showId);
+    //   }
+    // });
+  });
+  // See more section listeners--------------------------------------------
 
   // Listen for click event for the upcoming tv show
-
   const upcomingTvShowSectionEl = document.querySelector(".upcoming-cards");
   upcomingTvShowSectionEl.addEventListener("click", function (e) {
     if (e.target.closest(".upcoming-card")) {
@@ -395,4 +407,28 @@ const upcomingTVShows = async function () {
   });
 };
 
+// reusable cast listener to render cast detail info
+const reusableCastListener = async function (castEl) {
+  const peopleId = castEl.dataset.castId;
+  // Remove already existed elements
+  removeSearchResultContent();
+
+  // Now rendered the actor's full information
+  await people.renderPeopleDetails(peopleId);
+  // Now we can listen for the actor's other tv shows being clicked
+  reusableCastTVShowListener();
+};
+
+// reusable listener to render actor's other tv shows being clicked
+const reusableCastTVShowListener = function () {
+  const otherShowTitlesEl = document.querySelector(".filmography-container");
+  otherShowTitlesEl.addEventListener("click", function (e) {
+    if (e.target.classList.contains("other-show-title")) {
+      const showId = e.target.dataset.showId;
+      getTvShowDetails(showId);
+    }
+  });
+};
+
+trendingAndPopularTvShows();
 upcomingTVShows();
