@@ -417,7 +417,7 @@ media query for responsive devices
 @media only screen and (max-width: 1300px) {
   /* Actor information and filmography section*/
   .people-info-details-box .people-portrait {
-    max-height: 55rem;
+    max-height: 40rem;
     max-width: 40rem;
   }
 }

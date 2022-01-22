@@ -77,7 +77,7 @@ const renderItemHtml = function (tv, i) {
             class="tsm-poster-img" data-show-id="${tv.id}">
     </div>
     <div class="tsm__show-title" data-show-id="${tv.id}">${tv.name}</div>
-          <div class="trending-rank ${
+          <div class="trending-rank see-more-rank ${
             i === 0
               ? "gold-rank"
               : i === 1

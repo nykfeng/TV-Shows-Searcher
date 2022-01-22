@@ -250,17 +250,10 @@
   color: black;
 }
 
-.trending-rank {
-  position: absolute;
-  font-weight: bold;
-  z-index: 10;
+.see-more-rank {
   font-size: 6rem;
-  background: rgba(123, 0, 0, 0.8);
-  padding: 1rem 1.5rem 1.5rem 1.5rem;
   right: -2.5%;
   top: -5%;
-  color: #fff;
-  clip-path: polygon(100% 0, 100% 100%, 50% 84%, 0% 100%, 0 70%, 0% 0%);
 }
 
 @media only screen and (max-width: 1250px) {
