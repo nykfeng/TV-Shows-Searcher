@@ -32,7 +32,7 @@ header {
 }
 
 .result-area,
-.main-display-content,
+.main-trending-content,
 .upcoming-tv-content {
   max-width: 250rem;
   margin: 0 auto;
@@ -374,7 +374,7 @@ Main more details content section
 /* ========================================================================
 Main more details content section
 ========================================================================*/
-.main-display-content {
+.main-trending-content {
   display: flex;
   flex-direction: column;
   margin-bottom: 4rem;
@@ -402,12 +402,12 @@ media query for responsive devices
     font-size: 5rem;
   }
 
-  .main-display-content .trending-title,
+  .main-trending-content .trending-title,
   .upcoming-tv-content .upcoming-tv-title {
     font-size: 3.5rem;
   }
 
-  .main-display-content .slider-button {
+  .main-trending-content .slider-button {
     width: 5rem;
     height: 5rem;
     font-size: 2.5rem;
@@ -422,7 +422,7 @@ media query for responsive devices
   }
 }
 
-@media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 1180px) {
   .title-a-tag {
     font-size: 4.2rem;
   }
@@ -445,9 +445,13 @@ media query for responsive devices
     gap: 2rem;
   }
 
-  .main-display-content .trending-title,
+  .main-trending-content .trending-title,
   .upcoming-tv-content .upcoming-tv-title {
     font-size: 3.5rem;
+  }
+
+  .people-other-shows .other-shows-box {
+    justify-content: space-evenly;
   }
 
   /* Actor information and filmography section*/
@@ -461,7 +465,7 @@ media query for responsive devices
     align-items: center;
   }
 
-  .main-display-content .slider-button {
+  .main-trending-content .slider-button {
     width: 4rem;
     height: 4rem;
     font-size: 1.8rem;
@@ -506,7 +510,7 @@ media query for responsive devices
   }
 
   .poster-image {
-    width: 95%;
+    width: 80%;
   }
 
   .cast-title-dropdown {
@@ -516,12 +520,12 @@ media query for responsive devices
   }
 
   /* Trending and popular section at max 600 */
-  .main-display-content .trending-title,
+  .main-trending-content .trending-title,
   .upcoming-tv-content .upcoming-tv-title {
     font-size: 2.8rem;
   }
 
-  .main-display-content .slider-button {
+  .main-trending-content .slider-button {
     width: 3rem;
     height: 3rem;
     font-size: 1.5rem;
@@ -576,7 +580,7 @@ media query for responsive devices
   /* Actor information and filmography section*/
 
   .people-info-title-bar .people-info-title-text {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
   }
 
   .people-information .people-info-details {
@@ -617,5 +621,21 @@ media query for responsive devices
     /* width: 25rem;
     height: 38rem; */
     transform: scale(0.85);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .poster {
+    min-width: 35rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .people-information .close-btn {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 0.3rem solid #fff;
+    font-size: 2.5rem;
   }
 }

@@ -167,7 +167,7 @@ const hideUnhideTrendingTV = function () {
 
 // render content loader element for trending see more
 const renderContent = function (tvShowCodeList) {
-  const trendingTVBlockEl = document.querySelector(".main-display-content");
+  const trendingTVBlockEl = document.querySelector(".main-trending-content");
 
   const seeMoreDivEl = document.createElement("div");
   seeMoreDivEl.classList = "trending-see-more";

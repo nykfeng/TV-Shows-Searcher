@@ -138,7 +138,7 @@ const renderSliderRightBtnElements = function () {
 
 // Create trending / popular section content placeholder html
 const renderPlaceholderElements = function () {
-  const mainDisplayEl = document.querySelector(".main-display-content");
+  const mainDisplayEl = document.querySelector(".main-trending-content");
 
   // create the div element to hold all of trending tv
   const trendingTVDivEl = document.createElement("div");

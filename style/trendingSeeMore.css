@@ -376,3 +376,19 @@
     width: 10rem;
   }
 }
+
+@media only screen and (max-width: 500px) {
+  .trending-see-more__show-item,
+  .tsm__show-mid-container {
+    width: 35rem;
+  }
+
+  .main-trending-content .trending-title-text,
+  .upcoming-tv-content .upcoming-tv-title-text {
+    font-size: 2.4rem;
+  }
+
+  .title-expand {
+    font-size: 3rem;
+  }
+}

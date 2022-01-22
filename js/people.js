@@ -61,7 +61,7 @@ const peopleHeaderTitleElement = function () {
   const html = `
   <div class="people-info-title-bar">
     <div class="people-info-title-text">
-      Actor Information & Filmography
+      Actor Filmography
     </div>
     <button class="close-btn">X</button>
 </div>
