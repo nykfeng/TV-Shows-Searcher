@@ -387,9 +387,9 @@ media query for responsive devices
   .result-area .filmography-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15rem;
+    gap: 8rem;
     justify-content: space-around;
-    align-items: end;
+    align-items: start;
   }
 }
 
@@ -411,6 +411,14 @@ media query for responsive devices
     width: 5rem;
     height: 5rem;
     font-size: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  /* Actor information and filmography section*/
+  .people-info-details-box .people-portrait {
+    max-height: 50rem;
+    max-width: 50rem;
   }
 }
 
@@ -439,6 +447,10 @@ media query for responsive devices
 
   .tv-show-cast {
     grid-column: 1 / -1;
+  }
+
+  .tv-show-cast-grid {
+    grid-template-columns: 1fr;
   }
 
   .tv-show-cast-grid .cast-list {
@@ -572,11 +584,6 @@ media query for responsive devices
     padding-bottom: 0.5rem;
   }
 
-  .cast-list .cast-list-individual-box {
-    display: flex;
-    flex-direction: column;
-  }
-
   /* Actor information and filmography section*/
 
   .people-info-title-bar .people-info-title-text {
@@ -594,18 +601,21 @@ media query for responsive devices
   }
   .people-info-text {
     border: 0.3rem solid var(--secondary-gray-color);
-    border-radius: 2rem;
-    padding: 0.5rem;
-    width: 80vw;
+    border-radius: 1rem;
+    width: 70vw;
+  }
+
+  .people-name,
+  .people-gender,
+  .people-age,
+  .people-DOB,
+  .people-nationality {
+    margin-left: 0.5rem;
   }
 
   .people-info-details-box .people-portrait {
     max-height: 50rem;
     max-width: 30rem;
-  }
-
-  .people-other-shows .other-shows-box {
-    flex-direction: column;
   }
 
   .other-shows-box .other-show-character-portrait-div {
@@ -629,6 +639,36 @@ media query for responsive devices
     min-width: 35rem;
     display: flex;
     justify-content: center;
+  }
+
+  /* .people-other-shows .other-shows-box {
+    flex-direction: column;
+  } */
+
+  .cast-list .cast-list-individual-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .other-show-portrait {
+    object-position: 50% 20%;
+    width: 15rem;
+  }
+
+  .other-show-poster-title {
+    gap: 0.5rem;
+  }
+  .other-show-poster {
+    max-width: 16rem;
+  }
+
+  .other-show-title,
+  .other-show-character-name {
+    font-size: 1.8rem;
+  }
+
+  .other-show-character-name-div span {
+    font-size: 2rem;
   }
 
   .people-information .close-btn {

@@ -31,7 +31,7 @@
 .upcoming-more-card-div {
   display: grid;
   width: 100%;
-  padding: 5% 15%;
+  padding: 3% 10%;
   grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
   column-gap: 5rem;
   row-gap: 10rem;

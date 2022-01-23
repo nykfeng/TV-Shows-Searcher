@@ -384,4 +384,12 @@
   .title-expand {
     font-size: 3rem;
   }
+
+  .tsm-poster-img {
+    max-width: 35rem;
+  }
+
+  .trending-rank {
+    right: -3.5%;
+  }
 }

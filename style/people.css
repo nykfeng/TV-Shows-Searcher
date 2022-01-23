@@ -64,6 +64,8 @@
   font-size: 2rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 100;
+  overflow: hidden;
+  min-width: 25rem;
 }
 
 .people-info-text span {
@@ -71,7 +73,13 @@
 }
 .people-info-text-title {
   font-size: 3.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
+  background-image: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--main-color)
+  );
+  color: #fff;
 }
 
 .other-shows-box,
