@@ -218,6 +218,8 @@
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .tsm__show-score {
