@@ -69,6 +69,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  background-size: contain;
 }
 
 .upcoming-card:not(:first-child) {

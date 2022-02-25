@@ -69,7 +69,7 @@ const dateStringProcessor = function (dateStr) {
 
 const imageStringProcessor = function (imageLink) {
   return (
-    // imageLink.replace("medium_portrait", "original_untouched") ||
+    imageLink.replace("medium_portrait", "original_untouched") ||
     imageLink || ""
   );
 };
