@@ -1,4 +1,6 @@
-TV shows search app with autocompleter. Powered by TVmaze.
+TV Show Searcher is an interactive, responsive and dynamic web app that allows users to easily navigate the site and get information about their TV shows. 
+
+The app incorporates API calls to TVmaze
 
 ## Links
 

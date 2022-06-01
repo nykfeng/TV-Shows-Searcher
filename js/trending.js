@@ -231,16 +231,16 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="trending-cast">
-                        <img src="${tv.cast["0"].person.image.medium}" alt="${
-      tv.cast["0"].person.name
+                        <img src="${tv.cast["0"]?.person.image.medium}" alt="${
+      tv?.cast["0"]?.person.name
     }"
                             class="trending-cast-img">
-                        <img src="${tv.cast["1"].person.image.medium}" alt="${
-      tv.cast["1"].person.name
+                        <img src="${tv.cast["1"]?.person.image.medium}" alt="${
+      tv?.cast["1"]?.person.name
     }"
                             class="trending-cast-img">
-                        <img src="${tv.cast["2"].person.image.medium}" alt="${
-      tv.cast["2"].person.name
+                        <img src="${tv.cast["2"]?.person.image.medium}" alt="${
+      tv?.cast["2"]?.person.name
     }"
                             class="trending-cast-img">
                     </div>
@@ -252,31 +252,31 @@ const renderTrendingElements = function (trendingListOfTVToRender) {
                 }">Start Watching</a>
                 <div class="trending-cast-more">
                     <div class="trending-cast-detail">
-                        <img src="${tv.cast["0"].person.image.medium}" alt="${
-      tv.cast["0"].person.name
+                        <img src="${tv.cast["0"]?.person.image?.medium}" alt="${
+      tv?.cast["0"]?.person.name
     }"
                             class="trending-cast-img">
                         <p class="trending-cast-name" data-cast-id='${
-                          tv.cast["0"].person.id
-                        }'>${tv.cast["0"].person.name}</p>
+                          tv.cast["0"]?.person.id
+                        }'>${tv.cast["0"]?.person.name}</p>
                     </div>
                     <div class="trending-cast-detail">
-                        <img src="${tv.cast["1"].person.image.medium}" alt="${
-      tv.cast["1"].person.name
+                        <img src="${tv.cast["1"]?.person.image?.medium}" alt="${
+      tv?.cast["1"]?.person.name
     }"
                             class="trending-cast-img">
                         <p class="trending-cast-name" data-cast-id='${
-                          tv.cast["1"].person.id
-                        }'>${tv.cast["1"].person.name}</p>
+                          tv.cast["1"]?.person.id
+                        }'>${tv.cast["1"]?.person.name}</p>
                     </div>
                     <div class="trending-cast-detail">
-                        <img src="${tv.cast["2"].person.image.medium}" alt="${
-      tv.cast["2"].person.name
+                        <img src="${tv.cast["2"]?.person.image?.medium}" alt="${
+      tv?.cast["2"]?.person.name
     }"
                             class="trending-cast-img">
                         <p class="trending-cast-name" data-cast-id='${
-                          tv.cast["2"].person.id
-                        }'>${tv.cast["2"].person.name}</p>
+                          tv.cast["2"]?.person.id
+                        }'>${tv.cast["2"]?.person.name}</p>
                     </div>
                 </div>
             </div>
