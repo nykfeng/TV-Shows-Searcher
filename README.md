@@ -1,6 +1,6 @@
 TV Show Searcher is an interactive, responsive and dynamic web app that allows users to easily navigate the site and get information about their TV shows. 
 
-The app incorporates API calls to TVmaze
+The is a single-page application that incorporates API calls to TVmaze for information.
 
 ## Links
 
